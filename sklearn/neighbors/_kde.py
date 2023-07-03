@@ -331,6 +331,7 @@ class KernelDensity(BaseEstimator):
             raise NotImplementedError()
 
         data = np.asarray(self.tree_.data)
+        data = np.dot(data, self._H.T)
 
         rng = check_random_state(random_state)
         u = rng.uniform(0, 1, size=n_samples)
