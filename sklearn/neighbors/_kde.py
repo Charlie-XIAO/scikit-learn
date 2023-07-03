@@ -225,7 +225,8 @@ class KernelDensity(BaseEstimator):
             self.bandwidth_ = self.bandwidth
 
         X = self._validate_data(X, order="C", dtype=np.float64)
-        self._H = cholesky(np.cov(X.T), lower=True)
+        self._cov = np.cov(X.T)
+        self._H = cholesky(self._cov, lower=True)
 
         if sample_weight is not None:
             sample_weight = _check_sample_weight(
@@ -342,7 +343,12 @@ class KernelDensity(BaseEstimator):
             sum_weight = cumsum_weight[-1]
             i = np.searchsorted(cumsum_weight, u * sum_weight)
         if self.kernel == "gaussian":
-            return np.atleast_2d(rng.normal(data[i], self.bandwidth_))
+            norm = rng.multivariate_normal(
+                np.zeros(data.shape[1]),
+                self._cov * self.bandwidth_**2,
+                size=n_samples,
+            )
+            return np.atleast_2d(data[i] + norm)
 
         elif self.kernel == "tophat":
             # we first draw points from a d-dimensional normal distribution,
