@@ -7,6 +7,7 @@ import itertools
 from numbers import Integral, Real
 
 import numpy as np
+from scipy.linalg import cholesky, solve_triangular
 from scipy.special import gammainc
 
 from ..base import BaseEstimator, _fit_context
@@ -224,6 +225,7 @@ class KernelDensity(BaseEstimator):
             self.bandwidth_ = self.bandwidth
 
         X = self._validate_data(X, order="C", dtype=np.float64)
+        self._H = cholesky(np.cov(X.T), lower=True)
 
         if sample_weight is not None:
             sample_weight = _check_sample_weight(
@@ -234,7 +236,7 @@ class KernelDensity(BaseEstimator):
         if kwargs is None:
             kwargs = {}
         self.tree_ = TREE_DICT[algorithm](
-            X,
+            solve_triangular(self._H, X.T, lower=True).T,
             metric=self.metric,
             leaf_size=self.leaf_size,
             sample_weight=sample_weight,
@@ -269,7 +271,7 @@ class KernelDensity(BaseEstimator):
             N = self.tree_.sum_weight
         atol_N = self.atol * N
         log_density = self.tree_.kernel_density(
-            X,
+            solve_triangular(self._H, X.T, lower=True).T,
             h=self.bandwidth_,
             kernel=self.kernel,
             atol=atol_N,
@@ -277,7 +279,7 @@ class KernelDensity(BaseEstimator):
             breadth_first=self.breadth_first,
             return_log=True,
         )
-        log_density -= np.log(N)
+        log_density -= np.log(N) + np.sum(np.log(np.diag(self._H)))
         return log_density
 
     def score(self, X, y=None):
