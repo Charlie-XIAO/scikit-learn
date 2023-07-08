@@ -162,9 +162,10 @@ from ..metrics._dist_metrics cimport (
 from ._partition_nodes cimport partition_node_indices
 
 from ..utils import check_array
-from ..utils._typedefs cimport float64_t, intp_t
+from ..utils._cython_lapack cimport _potrf
 from ..utils._heap cimport heap_push
 from ..utils._sorting cimport simultaneous_sort as _simultaneous_sort
+from ..utils._typedefs cimport float64_t, intp_t
 
 cnp.import_array()
 
@@ -242,20 +243,25 @@ metric : str or DistanceMetric64 object, default='minkowski'
     the metrics listed in :class:`~sklearn.metrics.pairwise.distance_metrics` for
     more information on any distance metric.
 
-Additional keywords are passed to the distance metric class.
-Note: Callable functions in the metric parameter are NOT supported for KDTree
-and Ball Tree. Function call overhead will result in very poor performance.
+**kwargs : dict
+    Additional keywords to pass to the distance metric class.
 
 Attributes
 ----------
 data : memory view
     The training data
+
 valid_metrics: list of str
     List of valid distance metrics.
 
+Notes
+-----
+Callable functions in the metric parameter are *NOT* supported for KDTree
+and Ball Tree. Function call overhead will result in very poor performance.
+
 Examples
 --------
-Query for k-nearest neighbors
+Query for k-nearest neighbors:
 
     >>> import numpy as np
     >>> from sklearn.neighbors import {BinaryTree}
@@ -268,8 +274,8 @@ Query for k-nearest neighbors
     >>> print(dist)  # distances to 3 closest neighbors
     [ 0.          0.19662693  0.29473397]
 
-Pickle and Unpickle a tree.  Note that the state of the tree is saved in the
-pickle operation: the tree needs not be rebuilt upon unpickling.
+Pickle and Unpickle a tree: the state of the tree is saved in the pickle
+operation, so the tree needs not be rebuilt upon unpickling:
 
     >>> import numpy as np
     >>> import pickle
@@ -284,7 +290,7 @@ pickle operation: the tree needs not be rebuilt upon unpickling.
     >>> print(dist)  # distances to 3 closest neighbors
     [ 0.          0.19662693  0.29473397]
 
-Query for neighbors within a given radius
+Query for neighbors within a given radius:
 
     >>> import numpy as np
     >>> rng = np.random.RandomState(0)
@@ -306,7 +312,7 @@ Compute a gaussian kernel density estimate:
     >>> tree.kernel_density(X[:3], h=0.1, kernel='gaussian')
     array([ 6.94114649,  7.83281226,  7.2071716 ])
 
-Compute a two-point auto-correlation function
+Compute a two-point auto-correlation function:
 
     >>> import numpy as np
     >>> rng = np.random.RandomState(0)
@@ -775,6 +781,7 @@ VALID_METRIC_IDS = get_valid_metric_ids(VALID_METRICS)
 cdef class BinaryTree:
 
     cdef readonly const float64_t[:, ::1] data
+    cdef readonly const float64_t[:, ::1] cov
     cdef readonly const float64_t[::1] sample_weight
     cdef public float64_t sum_weight
 
@@ -804,6 +811,7 @@ cdef class BinaryTree:
     # (e.g. assigning to NULL or a to value in another segment).
     def __cinit__(self):
         self.data = np.empty((1, 1), dtype=np.float64, order='C')
+        self.cov = np.empty((1, 1), dtype=np.float64, order='C')
         self.sample_weight = np.empty(1, dtype=np.float64, order='C')
         self.idx_array = np.empty(1, dtype=np.intp, order='C')
         self.node_data = np.empty(1, dtype=NodeData, order='C')
@@ -826,6 +834,7 @@ cdef class BinaryTree:
         self.data = check_array(data, dtype=np.float64, order='C')
         if self.data.size == 0:
             raise ValueError("X is an empty array")
+        self.cov = np.atleast_2d(np.cov(data.T))
 
         n_samples = self.data.shape[0]
         n_features = self.data.shape[1]
@@ -1373,29 +1382,23 @@ cdef class BinaryTree:
         kernel_density(X, h, kernel='gaussian', atol=0, rtol=1E-8,
                        breadth_first=True, return_log=False)
 
-        Compute the kernel density estimate at points X with the given kernel,
-        using the distance metric specified at tree creation.
+        Compute the kernel density estimate at the points ``X`` with the given
+        kernel, using the distance metric specified at tree creation.
 
         Parameters
         ----------
         X : array-like of shape (n_samples, n_features)
-            An array of points to query.  Last dimension should match dimension
-            of training data.
+            An array of points to query. The last dimension should match
+            the dimension the training data.
         h : float
-            the bandwidth of the kernel
-        kernel : str, default="gaussian"
-            specify the kernel to use.  Options are
-            - 'gaussian'
-            - 'tophat'
-            - 'epanechnikov'
-            - 'exponential'
-            - 'linear'
-            - 'cosine'
-            Default is kernel = 'gaussian'
+            The factor of the bandwidth matrix.
+        kernel : {'gaussian', 'tophat', 'epanechnikov', 'exponential', \
+                  'linear', 'cosine'}, default='gaussian'
+            The kernel to use.
         atol : float, default=0
             Specify the desired absolute tolerance of the result.
             If the true result is `K_true`, then the returned result `K_ret`
-            satisfies ``abs(K_true - K_ret) < atol + rtol * K_ret``
+            satisfies ``abs(K_true - K_ret) < atol + rtol * K_ret``.
             The default is zero (i.e. machine precision).
         rtol : float, default=1e-8
             Specify the desired relative tolerance of the result.
@@ -1403,17 +1406,17 @@ cdef class BinaryTree:
             satisfies ``abs(K_true - K_ret) < atol + rtol * K_ret``
             The default is `1e-8` (i.e. machine precision).
         breadth_first : bool, default=False
-            If True, use a breadth-first search.  If False (default) use a
-            depth-first search.  Breadth-first is generally faster for
+            If True, use a breadth-first search. If False (default), use a
+            depth-first search. Breadth-first search is generally faster for
             compact kernels and/or high tolerances.
         return_log : bool, default=False
-            Return the logarithm of the result.  This can be more accurate
+            Return the logarithm of the result. This can be more accurate
             than returning the result itself for narrow kernels.
 
         Returns
         -------
         density : ndarray of shape X.shape[:-1]
-            The array of (log)-density evaluations
+            The array of (log)-density evaluations.
         """
         cdef float64_t h_c = h
         cdef float64_t log_atol = log(atol)
@@ -1446,10 +1449,44 @@ cdef class BinaryTree:
 
         # validate X and prepare for query
         X = check_array(X, dtype=np.float64, order='C')
-
         if X.shape[X.ndim - 1] != n_features:
             raise ValueError("query data dimension must "
                              "match training data dimension")
+
+        # Note that in general, the kernel density estimation is given by:
+        #  1 / (N|H|) * sum_{i=1}^{n} K ( H^{-1} (x - xi) ),
+        # where H is the bandwidth matrix chosen proportional to the square
+        # root of the covariance matrix of the original tree data. The factor
+        # is given by h_c, so essentially H = h * cov^{1/2}. We transform tree
+        # data and points X in advance to simplify calculations.
+        from scipy.linalg import solve_triangular
+
+        # equivalent: cho_cov = scipy.linalg.cholesky(self.cov, lower=True)
+        cdef int info
+        cdef float64_t[::1, :] cho_cov = np.empty_like(self.cov, order='F')
+        cho_cov[...] = self.cov
+        _potrf(True, n_features, &cho_cov[0, 0], n_features, &info)
+
+        cdef float64_t[:, ::1] scaled_data = solve_triangular(
+                                         cho_cov, self.data.T, lower=True).T
+        X = solve_triangular(cho_cov, X.T, lower=True).T
+
+        # cdef int iii, jjj
+
+        # print()
+        # for iii in range(X.shape[0]):
+        #     if iii < 3 or iii >= X.shape[0] - 3:
+        #         for jjj in range(X.shape[1]):
+        #             print(X[iii, jjj], end="   ")
+        #         print()
+
+        # print()
+        # for iii in range(scaled_data.shape[0]):
+        #     if iii < 3 or iii >= scaled_data.shape[0] - 3:
+        #         for jjj in range(scaled_data.shape[1]):
+        #             print(scaled_data[iii, jjj], end="   ")
+        #         print()
+
         Xarr_np = X.reshape((-1, n_features))
         cdef float64_t[:, ::1] Xarr = Xarr_np
 
@@ -1473,11 +1510,10 @@ cdef class BinaryTree:
             node_bound_widths = node_bound_widths_arr
             for i in range(Xarr.shape[0]):
                 log_density[i] = self._kde_single_breadthfirst(
-                                            pt, kernel_c, h_c,
-                                            log_knorm, log_atol, log_rtol,
-                                            nodeheap,
-                                            &node_log_min_bounds[0],
-                                            &node_bound_widths[0])
+                                    &scaled_data[0, 0], pt, kernel_c, h_c,
+                                    log_knorm, log_atol, log_rtol, nodeheap,
+                                    &node_log_min_bounds[0],
+                                    &node_bound_widths[0])
                 pt += n_features
         else:
             for i in range(Xarr.shape[0]):
@@ -1490,8 +1526,9 @@ cdef class BinaryTree:
                                  compute_log_kernel(dist_LB,
                                                     h_c, kernel_c))
                 log_bound_spread = logsubexp(log_max_bound, log_min_bound)
-                self._kde_single_depthfirst(0, pt, kernel_c, h_c,
-                                            log_knorm, log_atol, log_rtol,
+                self._kde_single_depthfirst(0, &scaled_data[0, 0], pt,
+                                            kernel_c, h_c, log_knorm,
+                                            log_atol, log_rtol,
                                             log_min_bound,
                                             log_bound_spread,
                                             &log_min_bound,
@@ -1501,6 +1538,8 @@ cdef class BinaryTree:
                 pt += n_features
 
         # normalize the results
+        for i in range(cho_cov.shape[0]):
+            log_knorm -= log(cho_cov[i, i])
         for i in range(log_density.shape[0]):
             log_density[i] += log_knorm
 
@@ -1937,9 +1976,9 @@ cdef class BinaryTree:
 
         return count
 
-    cdef float64_t _kde_single_breadthfirst(self, float64_t* pt,
-                                            KernelType kernel, float64_t h,
-                                            float64_t log_knorm,
+    cdef float64_t _kde_single_breadthfirst(self, float64_t* scaled_data,
+                                            float64_t* pt, KernelType kernel,
+                                            float64_t h, float64_t log_knorm,
                                             float64_t log_atol, float64_t log_rtol,
                                             NodeHeap nodeheap,
                                             float64_t* node_log_min_bounds,
@@ -1957,7 +1996,6 @@ cdef class BinaryTree:
         cdef float64_t global_log_min_bound, global_log_bound_spread
         cdef float64_t global_log_max_bound
 
-        cdef float64_t* data = &self.data[0, 0]
         cdef bint with_sample_weight = self.sample_weight is not None
         cdef float64_t* sample_weight
         if with_sample_weight:
@@ -2031,8 +2069,9 @@ cdef class BinaryTree:
                     logsubexp(global_log_bound_spread,
                               node_log_bound_spreads[i_node])
                 for i in range(node_info.idx_start, node_info.idx_end):
-                    dist_pt = self.dist(pt, data + n_features * idx_array[i],
-                                        n_features)
+                    dist_pt = self.dist(
+                                pt, scaled_data + n_features * idx_array[i],
+                                n_features)
                     log_density = compute_log_kernel(dist_pt, h, kernel)
                     if with_sample_weight:
                         log_weight = np.log(sample_weight[idx_array[i]])
@@ -2102,8 +2141,8 @@ cdef class BinaryTree:
                          global_log_bound_spread - log(2))
 
     cdef int _kde_single_depthfirst(
-                   self, intp_t i_node, float64_t* pt,
-                   KernelType kernel, float64_t h,
+                   self, intp_t i_node, float64_t* scaled_data,
+                   float64_t* pt, KernelType kernel, float64_t h,
                    float64_t log_knorm,
                    float64_t log_atol, float64_t log_rtol,
                    float64_t local_log_min_bound,
@@ -2119,7 +2158,6 @@ cdef class BinaryTree:
         cdef intp_t i, i1, i2, iw, start, end
         cdef float64_t N1, N2
 
-        cdef float64_t* data = &self.data[0, 0]
         cdef NodeData_t* node_data = &self.node_data[0]
         cdef bint with_sample_weight = self.sample_weight is not None
         cdef float64_t* sample_weight
@@ -2168,7 +2206,7 @@ cdef class BinaryTree:
             global_log_bound_spread[0] = logsubexp(global_log_bound_spread[0],
                                                    local_log_bound_spread)
             for i in range(node_info.idx_start, node_info.idx_end):
-                dist_pt = self.dist(pt, (data + n_features * idx_array[i]),
+                dist_pt = self.dist(pt, scaled_data + n_features * idx_array[i],
                                     n_features)
                 log_dens_contribution = compute_log_kernel(dist_pt, h, kernel)
                 if with_sample_weight:
@@ -2224,14 +2262,14 @@ cdef class BinaryTree:
             global_log_bound_spread[0] = logaddexp(global_log_bound_spread[0],
                                                    child2_log_bound_spread)
 
-            self._kde_single_depthfirst(i1, pt, kernel, h, log_knorm,
-                                        log_atol, log_rtol,
+            self._kde_single_depthfirst(i1, pt, scaled_data, kernel, h,
+                                        log_knorm, log_atol, log_rtol,
                                         child1_log_min_bound,
                                         child1_log_bound_spread,
                                         global_log_min_bound,
                                         global_log_bound_spread)
-            self._kde_single_depthfirst(i2, pt, kernel, h, log_knorm,
-                                        log_atol, log_rtol,
+            self._kde_single_depthfirst(i2, pt, scaled_data, kernel, h,
+                                        log_knorm, log_atol, log_rtol,
                                         child2_log_min_bound,
                                         child2_log_bound_spread,
                                         global_log_min_bound,

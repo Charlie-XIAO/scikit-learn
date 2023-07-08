@@ -384,6 +384,7 @@ extension_config = {
     "utils": [
         {"sources": ["sparsefuncs_fast.pyx"], "include_np": True},
         {"sources": ["_cython_blas.pyx"]},
+        {"sources": ["_cython_lapack.pyx"]},
         {"sources": ["arrayfuncs.pyx"]},
         {
             "sources": ["murmurhash.pyx", join("src", "MurmurHash3.cpp")],

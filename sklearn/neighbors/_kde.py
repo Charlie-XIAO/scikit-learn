@@ -7,7 +7,6 @@ import itertools
 from numbers import Integral, Real
 
 import numpy as np
-from scipy.linalg import cholesky, solve_triangular
 from scipy.special import gammainc
 
 from ..base import BaseEstimator, _fit_context
@@ -225,8 +224,6 @@ class KernelDensity(BaseEstimator):
             self.bandwidth_ = self.bandwidth
 
         X = self._validate_data(X, order="C", dtype=np.float64)
-        self._cov = np.cov(X.T)
-        self._H = cholesky(self._cov, lower=True)
 
         if sample_weight is not None:
             sample_weight = _check_sample_weight(
@@ -237,7 +234,7 @@ class KernelDensity(BaseEstimator):
         if kwargs is None:
             kwargs = {}
         self.tree_ = TREE_DICT[algorithm](
-            solve_triangular(self._H, X.T, lower=True).T,
+            X,
             metric=self.metric,
             leaf_size=self.leaf_size,
             sample_weight=sample_weight,
@@ -272,7 +269,7 @@ class KernelDensity(BaseEstimator):
             N = self.tree_.sum_weight
         atol_N = self.atol * N
         log_density = self.tree_.kernel_density(
-            solve_triangular(self._H, X.T, lower=True).T,
+            X,
             h=self.bandwidth_,
             kernel=self.kernel,
             atol=atol_N,
@@ -280,7 +277,7 @@ class KernelDensity(BaseEstimator):
             breadth_first=self.breadth_first,
             return_log=True,
         )
-        log_density -= np.log(N) + np.sum(np.log(np.diag(self._H)))
+        log_density -= np.log(N)
         return log_density
 
     def score(self, X, y=None):
@@ -332,7 +329,7 @@ class KernelDensity(BaseEstimator):
             raise NotImplementedError()
 
         data = np.asarray(self.tree_.data)
-        data = np.dot(data, self._H.T)
+        cov = np.asarray(self.tree_.cov)
 
         rng = check_random_state(random_state)
         u = rng.uniform(0, 1, size=n_samples)
@@ -345,7 +342,7 @@ class KernelDensity(BaseEstimator):
         if self.kernel == "gaussian":
             norm = rng.multivariate_normal(
                 np.zeros(data.shape[1]),
-                self._cov * self.bandwidth_**2,
+                cov * self.bandwidth_**2,
                 size=n_samples,
             )
             return np.atleast_2d(data[i] + norm)

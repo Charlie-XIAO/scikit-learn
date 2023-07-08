@@ -120,7 +120,8 @@ Tips for performance
 
   This item is based on `this comment from Stéfan's Benhel <https://github.com/cython/cython/issues/2798#issuecomment-459971828>`_
 
-* Direct calls to BLAS routines are possible via interfaces defined in ``sklearn.utils._cython_blas``.
+* Direct calls to BLAS and LAPACK routines are possible via interfaces defined respectively
+  in ``sklearn.utils._cython_blas`` and ``sklearn.utils._cython_lapack``.
 
 Using OpenMP
 ^^^^^^^^^^^^
