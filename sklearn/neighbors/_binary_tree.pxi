@@ -1977,8 +1977,6 @@ cdef class BinaryTree:
         cdef float64_t dist_LB_1 = 0, dist_LB_2 = 0
         cdef float64_t dist_UB_1 = 0, dist_UB_2 = 0
 
-        cdef float64_t dist_UB, dist_LB
-
         # push the top node to the heap
         cdef NodeHeapData_t nodeheap_item
         nodeheap_item.val = min_dist(self, 0, pt)
@@ -2045,7 +2043,7 @@ cdef class BinaryTree:
             # Case 4: split node and query subnodes
             else:
                 i1 = 2 * i_node + 1
-                i2 = 2 * i_node + 2
+                i2 = i1 + 1
 
                 if with_sample_weight:
                     N1 = _total_node_weight(node_data, sample_weight,
@@ -2059,19 +2057,19 @@ cdef class BinaryTree:
                 min_max_dist(self, i1, pt, &dist_LB_1, &dist_UB_1)
                 min_max_dist(self, i2, pt, &dist_LB_2, &dist_UB_2)
 
-                node_log_min_bounds[i1] = (log(N1) +
-                                           compute_log_kernel(dist_UB_1,
-                                                              h, kernel))
-                node_log_bound_spreads[i1] = (log(N1) +
-                                              compute_log_kernel(dist_LB_1,
-                                                                 h, kernel))
+                node_log_min_bounds[i1] = log(N1) + compute_log_kernel(dist_UB_1,
+                                                                       h, kernel)
+                node_log_bound_spreads[i1] = logsubexp(log(N1) +
+                                                       compute_log_kernel(dist_LB_1,
+                                                                          h, kernel),
+                                                       node_log_min_bounds[i1])
 
-                node_log_min_bounds[i2] = (log(N2) +
-                                           compute_log_kernel(dist_UB_2,
-                                                              h, kernel))
-                node_log_bound_spreads[i2] = (log(N2) +
-                                              compute_log_kernel(dist_LB_2,
-                                                                 h, kernel))
+                node_log_min_bounds[i2] = log(N1) + compute_log_kernel(dist_UB_2,
+                                                                       h, kernel)
+                node_log_bound_spreads[i2] = logsubexp(log(N2) +
+                                                       compute_log_kernel(dist_LB_2,
+                                                                          h, kernel),
+                                                       node_log_min_bounds[i2])
 
                 global_log_min_bound = logsubexp(global_log_min_bound,
                                                  node_log_min_bounds[i_node])
@@ -2080,9 +2078,8 @@ cdef class BinaryTree:
                 global_log_min_bound = logaddexp(global_log_min_bound,
                                                  node_log_min_bounds[i2])
 
-                global_log_bound_spread =\
-                    logsubexp(global_log_bound_spread,
-                              node_log_bound_spreads[i_node])
+                global_log_bound_spread = logsubexp(global_log_bound_spread,
+                                                    node_log_bound_spreads[i_node])
                 global_log_bound_spread = logaddexp(global_log_bound_spread,
                                                     node_log_bound_spreads[i1])
                 global_log_bound_spread = logaddexp(global_log_bound_spread,
