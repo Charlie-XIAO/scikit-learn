@@ -48,8 +48,7 @@ pre.sk-expandable {
     content: "> ";
   }
 
-  &[data-os="linux"],
-  &[data-os="mac"] {
+  &[data-os="linux"], &[data-os="mac"] {
     > span:before {
       content: "$ ";
     }

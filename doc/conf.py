@@ -55,15 +55,16 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.imgconverter",
     "sphinx_gallery.gen_gallery",
-    "sphinx_issues",
-    "add_toctree_functions",
     "sphinx-prompt",
     "sphinx_copybutton",
     "sphinxext.opengraph",
-    "doi_role",
-    "allow_nan_estimators",
     "matplotlib.sphinxext.plot_directive",
     "sphinxcontrib.sass",
+    # See sphinxext/
+    "add_toctree_functions",
+    "allow_nan_estimators",
+    "doi_role",
+    "sphinx_issues",
 ]
 
 # Specify how to identify the prompt when copying code snippets

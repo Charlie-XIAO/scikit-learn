@@ -72,8 +72,7 @@ div.sk-landing-body {
     border-color: var(--sk-cyan-dark);
     color: white;
 
-    &:hover,
-    &:active {
+    &:hover, &:active {
       background-color: var(--sk-cyan);
       border-color: var(--sk-cyan);
     }

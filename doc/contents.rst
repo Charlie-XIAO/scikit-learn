@@ -1,7 +1,3 @@
-.. Places global toc into the sidebar
-
-:globalsidebartoc: True
-
 =================
 Table Of Contents
 =================
