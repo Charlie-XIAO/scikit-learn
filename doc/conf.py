@@ -63,6 +63,7 @@ extensions = [
     "doi_role",
     "allow_nan_estimators",
     "matplotlib.sphinxext.plot_directive",
+    "sphinxcontrib.sass",
 ]
 
 # Specify how to identify the prompt when copying code snippets
@@ -122,7 +123,7 @@ autosummary_generate = True
 source_suffix = ".rst"
 
 # The encoding of source files.
-# source_encoding = 'utf-8'
+source_encoding = "utf-8"
 
 # The main toctree document.
 root_doc = "contents"
@@ -159,7 +160,7 @@ else:
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ["_build", "templates", "includes", "themes"]
+exclude_patterns = ["_build", "templates", "includes"]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -187,20 +188,39 @@ pygments_style = "sphinx"
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-html_theme = "scikit-learn-modern"
+html_theme = "pydata_sphinx_theme"
+
+# Additional templates that should be rendered to pages, maps page names to
+# template names.
+html_additional_pages = {"index": "index.html"}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    "legacy_google_analytics": True,
-    "analytics": True,
-    "mathjax_path": mathjax_path,
-    "link_to_live_contributing_page": not parsed_version.is_devrelease,
+    "analytics": {
+        "plausible_analytics_domain": "scikit-learn.org",
+        "plausible_analytics_url": "https://views.scientific-python.org/js/script.js",
+    },
+    "logo": {
+        "alt_text": "scikit-learn homepage",
+        "image_relative": "logos/scikit-learn-logo-small.png",
+        "image_light": "logos/scikit-learn-logo-small.png",
+        "image_dark": "logos/scikit-learn-logo-small.png",
+    },
+    "header_links_before_dropdown": 4,
+    "icon_links": [
+        # "url" required; "icon" is icon class if "type" is "fontawesome" or path to
+        # local image if "type" is "local"
+        {
+            "name": "GitHub",
+            "url": "https://github.com/scikit-learn/scikit-learn",
+            "icon": "fa-brands fa-square-github",
+            "type": "fontawesome",
+        },
+    ],
+    "use_edit_page_button": True,
 }
-
-# Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = ["themes"]
 
 
 # The name for this set of Sphinx documents.  If None, it defaults to
@@ -210,10 +230,6 @@ html_theme_path = ["themes"]
 # A shorter title for the navigation bar.  Default is the same as html_title.
 html_short_title = "scikit-learn"
 
-# The name of an image file (relative to this directory) to place at the top
-# of the sidebar.
-html_logo = "logos/scikit-learn-logo-small.png"
-
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
@@ -222,7 +238,18 @@ html_favicon = "logos/favicon.ico"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["images"]
+html_static_path = ["images", "css", "js"]
+
+# Additional js files
+html_js_files = ["details-permalink.js"]
+
+# Additional css files, which are compiled from scss files using sphinxcontrib-sass
+sass_src_dir = "scss"
+sass_out_dir = "css/styles"
+sass_targets = {
+    "index.scss": "index.css",
+}
+html_css_files = ["styles/index.css"]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -230,10 +257,6 @@ html_static_path = ["images"]
 
 # Custom sidebar templates, maps document names to template names.
 # html_sidebars = {}
-
-# Additional templates that should be rendered to pages, maps page names to
-# template names.
-html_additional_pages = {"index": "index.html"}
 
 # If false, no module index is generated.
 html_domain_indices = False
@@ -307,6 +330,12 @@ redirects = {
 html_context["redirects"] = redirects
 for old_link in redirects:
     html_additional_pages[old_link] = "redirects.html"
+
+# Information needed for the `use_edit_page_button`
+html_context["github_user"] = "scikit-learn"
+html_context["github_repo"] = "scikit-learn"
+html_context["github_version"] = "main"
+html_context["doc_path"] = "doc"
 
 # Not showing the search summary makes the search page load faster.
 html_show_search_summary = True

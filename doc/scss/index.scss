@@ -1,0 +1,176 @@
+:root {
+  --sk-cyan-darker: #2a6280;
+  --sk-cyan-dark: #30799c;
+  --sk-cyan: #3499cd;
+
+  --sk-orange-dark: #e07200;
+  --sk-orange: #ff9c34;
+  --sk-orange-light: #ffb260;
+  --sk-organge-lighter: #fff3d3;
+}
+
+div.sk-landing-container {
+  max-width: 1400px;
+
+  .text-white {
+    text-shadow: 0px 0px 8px var(--sk-cyan-darker);
+  }
+}
+
+/* Top bar */
+
+div.sk-landing-top-bar {
+  background-image: linear-gradient(
+    160deg,
+    var(--sk-cyan-darker) 0%,
+    var(--sk-cyan) 17%,
+    var(--sk-organge-lighter) 59%,
+    var(--sk-orange-light) 100%
+  );
+
+  .sk-landing-header {
+    font-size: 3.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .sk-landing-subheader {
+    letter-spacing: 0.17rem;
+    margin-top: 0;
+  }
+
+  a.sk-landing-btn {
+    background-color: var(--sk-orange);
+    color: black;
+    font-size: 1.1rem;
+    font-weight: 500;
+
+    &:hover {
+      background-color: var(--sk-orange-light);
+    }
+  }
+
+  ul.sk-landing-header-body {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: black;
+  }
+}
+
+/* Body */
+
+div.sk-landing-body {
+  div.card {
+    background-color: var(--pst-color-background);
+    border-color: var(--pst-color-border);
+  }
+
+  .sk-px-xl-4 {
+    @media screen and (min-width: 1200px) {
+      padding-left: 1.3rem!important;
+      padding-right: 1.3rem!important;
+    }
+  }
+
+  .sk-card-title {
+    font-weight: 700;
+    margin-top: 0;
+  }
+
+  .sk-btn-primary {
+    background-color: var(--sk-cyan-dark);
+    border-color: var(--sk-cyan-dark);
+    color: white;
+
+    &:hover,
+    &:active {
+      background-color: var(--sk-cyan);
+      border-color: var(--sk-cyan);
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: unset!important;  // needed because sphinx sets the height
+
+    .sk-index-img {
+      max-height: 240px;
+      margin: auto;
+      margin-bottom: 1em;
+      width: auto;
+
+      @media screen and (min-width: 768px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/* More info */
+
+div.sk-landing-more-info {
+  font-size: 0.96rem;
+
+  html[data-theme="light"] & {
+    background-color: #f8f8f8;
+  }
+
+  html[data-theme="dark"] & {
+    background-color: #222222;
+  }
+
+  .sk-landing-call-header {
+    color: var(--sk-orange-dark);
+    font-weight: 700;
+    margin-top: 0;
+  }
+
+  ul.sk-landing-call-list > li {
+    margin-bottom: 0.25rem;
+  }
+
+  a.sk-accent-btn {
+    background-color: var(--sk-orange);
+    border-color: var(--sk-orange);
+    color: black;
+
+    &:hover {
+      background-color: var(--sk-orange-light);
+    }
+  }
+
+  .sk-who-uses-carousel {
+    min-height: 200px;
+
+    .carousel-item img {
+      max-height: 100px;
+      max-width: 50%;
+    }
+  }
+
+  .sk-more-testimonials {
+    text-align: right!important;
+  }
+}
+
+/* Footer */
+
+div.sk-landing-footer {
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.sk-footer-funding-logos {
+      text-decoration: none;  // avoid the underlines between logo images
+
+      img {
+        max-height: 36px;
+        max-width: 80px;
+        margin: 0 8px;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
