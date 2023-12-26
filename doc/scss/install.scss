@@ -1,0 +1,97 @@
+/*
+  * This is the styling for install.rst.
+  *
+  * Hack implementation of the awesome https://spacy.io/usage/#quickstart page.
+  * Original implementation: https://github.com/ines/quickstart
+*/
+
+/* Input radio button and checkbox */
+
+div.sk-install {
+  > input {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    opacity: 0;
+  }
+
+  > label {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 5px 11px;
+    background-color: var(--sk-orange-lighter);
+    border: none;
+    border-radius: 3px;
+    color: black;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  > input:checked + label {
+    background-color: var(--sk-orange);
+    color: white;
+  }
+}
+
+/* Hide expandable content by default */
+
+.sk-expandable {
+  display: none;
+}
+
+/* Prompt prefix */
+
+pre.sk-expandable {
+  &[data-os="windows"] > span:before {
+    content: "> ";
+  }
+
+  &[data-os="linux"],
+  &[data-os="mac"] {
+    > span:before {
+      content: "$ ";
+    }
+  }
+}
+
+/* Show hidden content for specific packager */
+
+$packagertypes: conda pip;
+
+@each $packager in $packagertypes {
+  $selector: unquote("#quickstart-#{$packager}");
+
+  #{$selector}:checked ~* [data-packager="#{$packager}"] {
+    display: block;
+  }
+}
+
+/* Show hidden content for specific os */
+
+$ostypes: windows linux mac;
+
+@each $os in $ostypes {
+  $selector: unquote("#quickstart-#{$os}");
+
+  #{$selector}:not(:checked) ~* [data-os="#{$os}"] {
+    display: none;
+  }
+}
+
+/* venv-related */
+
+#quickstart-conda:checked ~ #quickstart-venv ~ label[for="quickstart-venv"] {
+  display: none;  // hide because venv not compatible with conda
+}
+
+#quickstart-venv {
+  &:not(:checked) ~* [data-venv=""] {
+    display: none;
+  }
+
+  &:checked ~* [data-venv="no"] {
+    display: none;
+  }
+}

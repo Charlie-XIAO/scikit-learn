@@ -6,21 +6,21 @@ Installing scikit-learn
 
 There are different ways to install scikit-learn:
 
-  * :ref:`Install the latest official release <install_official_release>`. This
-    is the best approach for most users. It will provide a stable version
-    and pre-built packages are available for most platforms.
+* :ref:`Install the latest official release <install_official_release>`. This
+  is the best approach for most users. It will provide a stable version
+  and pre-built packages are available for most platforms.
 
-  * Install the version of scikit-learn provided by your
-    :ref:`operating system or Python distribution <install_by_distribution>`.
-    This is a quick option for those who have operating systems or Python
-    distributions that distribute scikit-learn.
-    It might not provide the latest release version.
+* Install the version of scikit-learn provided by your
+  :ref:`operating system or Python distribution <install_by_distribution>`.
+  This is a quick option for those who have operating systems or Python
+  distributions that distribute scikit-learn.
+  It might not provide the latest release version.
 
-  * :ref:`Building the package from source
-    <install_bleeding_edge>`. This is best for users who want the
-    latest-and-greatest features and aren't afraid of running
-    brand-new code. This is also needed for users who wish to contribute to the
-    project.
+* :ref:`Building the package from source
+  <install_bleeding_edge>`. This is best for users who want the
+  latest-and-greatest features and aren't afraid of running
+  brand-new code. This is also needed for users who wish to contribute to the
+  project.
 
 
 .. _install_official_release:
@@ -28,30 +28,28 @@ There are different ways to install scikit-learn:
 Installing the latest release
 =============================
 
-.. This quickstart installation is a hack of the awesome
-   https://spacy.io/usage/#quickstart page.
-   See the original javascript implementation
-   https://github.com/ines/quickstart
+.. Hack implementation of the awesome https://spacy.io/usage/#quickstart page.
+   Original implementation: https://github.com/ines/quickstart
+   Styling see scss/install.scss
 
 
 .. raw:: html
 
-  <div class="install">
+  <div class="sk-install">
        <strong>Operating System</strong>
-          <input type="radio" name="os" id="quickstart-win" checked>
-          <label for="quickstart-win">Windows</label>
+          <input type="radio" name="os" id="quickstart-windows" checked>
+          <label for="quickstart-windows">Windows</label>
           <input type="radio" name="os" id="quickstart-mac">
           <label for="quickstart-mac">macOS</label>
-          <input type="radio" name="os" id="quickstart-lin">
-          <label for="quickstart-lin">Linux</label><br />
+          <input type="radio" name="os" id="quickstart-linux">
+          <label for="quickstart-linux">Linux</label><br />
        <strong>Packager</strong>
           <input type="radio" name="packager" id="quickstart-pip" checked>
           <label for="quickstart-pip">pip</label>
           <input type="radio" name="packager" id="quickstart-conda">
           <label for="quickstart-conda">conda</label><br />
           <input type="checkbox" name="config" id="quickstart-venv">
-          <label for="quickstart-venv"></label>
-       </span>
+          <label for="quickstart-venv">venv</label>
 
 .. raw:: html
 
@@ -94,7 +92,15 @@ Then run:
   <span>source sklearn-venv/bin/activate</span>
   <span>pip install -U scikit-learn</span></pre>
 
-    <pre class="sk-expandable" data-packager="conda"
+    <pre class="sk-expandable" data-os="linux" data-packager="conda"
+    ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
+  <span>conda activate sklearn-env</span></pre>
+
+    <pre class="sk-expandable" data-os="windows" data-packager="conda"
+    ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
+  <span>conda activate sklearn-env</span></pre>
+
+    <pre class="sk-expandable" data-os="mac" data-packager="conda"
     ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
   <span>conda activate sklearn-env</span></pre>
   </div>
@@ -119,12 +125,32 @@ In order to check your installation you can use
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
 
-    <pre class="sk-expandable" data-packager="pip" data-venv=""
+    <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
     ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
 
-    <pre class="sk-expandable" data-packager="conda"
+    <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
+    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
+  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
+
+    <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
+    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
+  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
+
+    <pre class="sk-expandable" data-packager="conda" data-os="linux"
+    ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
+  <span>conda list  # to see all packages installed in the active conda environment</span>
+  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
+
+  <pre class="sk-expandable" data-packager="conda" data-os="windows"
+    ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
+  <span>conda list  # to see all packages installed in the active conda environment</span>
+  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
+
+  <pre class="sk-expandable" data-packager="conda" data-os="mac"
     ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
   <span>conda list  # to see all packages installed in the active conda environment</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
@@ -241,9 +267,7 @@ NetBSD
 ------
 
 scikit-learn is available via `pkgsrc-wip
-<http://pkgsrc-wip.sourceforge.net/>`_:
-
-    https://pkgsrc.se/math/py-scikit-learn
+<http://pkgsrc-wip.sourceforge.net/>`_: https://pkgsrc.se/math/py-scikit-learn
 
 
 MacPorts for Mac OSX
@@ -320,11 +344,13 @@ It can happen that pip fails to install packages when reaching the default path
 size limit of Windows if Python is installed in a nested location such as the
 `AppData` folder structure under the user home directory, for instance::
 
-    C:\Users\username>C:\Users\username\AppData\Local\Microsoft\WindowsApps\python.exe -m pip install scikit-learn
-    Collecting scikit-learn
-    ...
-    Installing collected packages: scikit-learn
-    ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\username\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.7_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python37\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\292\\api-v1-json-data-list-data_name-australian-limit-2-data_version-1-status-deactivated.json.gz'
+.. code-block:: bat
+
+  C:\Users\username>C:\Users\username\AppData\Local\Microsoft\WindowsApps\python.exe -m pip install scikit-learn
+  Collecting scikit-learn
+  ...
+  Installing collected packages: scikit-learn
+  ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\username\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.7_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python37\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\292\\api-v1-json-data-list-data_name-australian-limit-2-data_version-1-status-deactivated.json.gz'
 
 In this case it is possible to lift that limit in the Windows registry by
 using the ``regedit`` tool:
@@ -340,6 +366,6 @@ using the ``regedit`` tool:
 
 #. Reinstall scikit-learn (ignoring the previous broken installation):
 
-.. prompt:: bash $
+.. prompt:: bat >
 
     pip install --exists-action=i scikit-learn
