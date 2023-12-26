@@ -209,6 +209,7 @@ html_theme_options = {
         "image_dark": "logos/scikit-learn-logo-small.png",
     },
     "header_links_before_dropdown": 5,
+    "navbar_align": "left",
     "icon_links": [
         # "url" required; "icon" is icon class if "type" is "fontawesome" or path to
         # local image if "type" is "local"
