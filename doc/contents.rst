@@ -11,20 +11,20 @@ Table Of Contents
 .. toctree::
     :maxdepth: 2
 
-    install
+    Install <install>
     user_guide
-    modules/classes
+    API <modules/classes>
     auto_examples/index
     Community <https://blog.scikit-learn.org/>
     getting_started
-    tutorial/index
+    Tutorials <tutorial/index>
     whats_new
-    glossary
-    developers/index
-    faq
+    Glossary <glossary>
+    Development <developers/index>
+    FAQ <faq>
     support
     related_projects
     roadmap
-    governance
+    Governance <governance>
     about
     Other Versions and Download <https://scikit-learn.org/dev/versions.html>
