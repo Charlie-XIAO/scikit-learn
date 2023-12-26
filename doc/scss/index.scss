@@ -7,6 +7,11 @@
   --sk-orange: #ff9c34;
   --sk-orange-light: #ffb260;
   --sk-organge-lighter: #fff3d3;
+
+  --sk-text-dark: #222832;
+
+  --sk-background-dim-light: #f8f8f8;
+  --sk-background-dim-dark: #222222;
 }
 
 div.sk-landing-container {
@@ -40,7 +45,7 @@ div.sk-landing-top-bar {
 
   a.sk-landing-btn {
     background-color: var(--sk-orange);
-    color: black;
+    color: var(--sk-text-dark);
     font-size: 1.1rem;
     font-weight: 500;
 
@@ -54,7 +59,7 @@ div.sk-landing-top-bar {
     margin-bottom: auto;
     font-size: 1.2rem;
     font-weight: 500;
-    color: black;
+    color: var(--sk-text-dark);
   }
 }
 
@@ -113,11 +118,11 @@ div.sk-landing-more-info {
   font-size: 0.96rem;
 
   html[data-theme="light"] & {
-    background-color: #f8f8f8;
+    background-color: var(--sk-background-dim-light);
   }
 
   html[data-theme="dark"] & {
-    background-color: #222222;
+    background-color: var(--sk-background-dim-dark);
   }
 
   .sk-landing-call-header {
@@ -133,7 +138,7 @@ div.sk-landing-more-info {
   a.sk-accent-btn {
     background-color: var(--sk-orange);
     border-color: var(--sk-orange);
-    color: black;
+    color: var(--sk-text-dark);
 
     &:hover {
       background-color: var(--sk-orange-light);
@@ -157,20 +162,22 @@ div.sk-landing-more-info {
 /* Footer */
 
 div.sk-landing-footer {
-  a {
-    &:hover {
-      text-decoration: none;
+  a.sk-footer-funding-link {
+    text-decoration: none;
+
+    p.sk-footer-funding-text {
+      color: var(--pst-color-link);
+
+      &:hover {
+        color: var(--pst-color-secondary);
+      }
     }
 
-    &.sk-footer-funding-logos {
-      text-decoration: none;  // avoid the underlines between logo images
-
-      img {
-        max-height: 36px;
-        max-width: 80px;
-        margin: 0 8px;
-        margin-bottom: 8px;
-      }
+    div.sk-footer-funding-logos > img {
+      max-height: 36px;
+      max-width: 80px;
+      margin: 0 8px;
+      margin-bottom: 8px;
     }
   }
 }

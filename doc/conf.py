@@ -241,7 +241,7 @@ html_favicon = "logos/favicon.ico"
 html_static_path = ["images", "css", "js"]
 
 # Additional js files
-html_js_files = ["details-permalink.js"]
+html_js_files = ["scripts/details-permalink.js"]
 
 # Additional css files, which are compiled from scss files using sphinxcontrib-sass
 sass_src_dir = "scss"
