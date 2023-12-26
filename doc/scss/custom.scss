@@ -1,0 +1,10 @@
+/** This is a general styling sheet.
+  * It is mainly used to override the default styling of pydata-sphinx-theme. */
+
+/** Re-style code block to avoid copy button going out of place. The selector is chosen
+  * according to:
+  * https://github.com/executablebooks/sphinx-copybutton/blob/1a2ee439dae08de21d429dd5b4abc587579c3cf4/docs/conf.py#L118 */
+
+div > div.highlight > pre {
+  margin-top: 0;
+}

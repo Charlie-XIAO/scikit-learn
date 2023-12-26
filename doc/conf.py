@@ -246,13 +246,15 @@ html_static_path = ["images", "css", "js"]
 html_js_files = ["scripts/details-permalink.js"]
 
 # Additional css files, which are compiled from scss files using sphinxcontrib-sass
+html_css_file_names = [
+    "colors",
+    "custom",
+    "index",
+    "install",
+]
 sass_src_dir, sass_out_dir = "scss", "css/styles"
-sass_targets = {
-    "colors.scss": "colors.css",
-    "index.scss": "index.css",
-    "install.scss": "install.css",
-}
-html_css_files = [f"styles/{target}" for target in sass_targets.values()]
+sass_targets = {f"{name}.scss": f"{name}.css" for name in html_css_file_names}
+html_css_files = [f"styles/{name}.css" for name in html_css_file_names]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
