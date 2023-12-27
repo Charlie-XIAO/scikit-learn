@@ -1,93 +1,60 @@
-/** This is the styling for install.rst. It is a hack implementation of the awesome
-  * https://spacy.io/usage/#quickstart page. Original implementation:
-  * https://github.com/ines/quickstart */
+/** This is the styling for install.rst. It is partially vendored from the pytorch
+  * "Get Started" page: https://pytorch.org/get-started/locally/ */
 
-/* Input radio button and checkbox */
+/* Installation options grid */
 
-div.sk-install {
-  > input {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    opacity: 0;
-  }
-
-  > label {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 5px 11px;
-    background-color: var(--sk-orange-lighter);
-    border: none;
-    border-radius: 3px;
-    color: black;
-
-    &:hover {
-      cursor: pointer;
+div.sk-install-options-grid {
+  div.headings {
+    @media screen and (max-width: 768px) {
+      display: none;  // hide on mobile
     }
   }
 
-  > input:checked + label {
-    background-color: var(--sk-orange);
-    color: white;
+  div.title-block {
+    border: 2px solid #ccc;
+    margin: .0625rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    color: #6c6c6d;
+    line-height: 1.25rem;
+    display: flex;
+    align-items: center;
+
+    &.mobile-heading {
+      @media screen and (min-width: 768px) {
+        display: none;  // hide on desktop
+      }
+    }
+  }
+
+  div.block {
+    margin-bottom: 0.0625rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  div.option {
+    border: 2px solid #fff;
+    background-color: var(--sk-orange-lightest);
+    cursor: pointer;
+
+    &.selected {
+      background-color: var(--sk-orange);
+    }
   }
 }
 
-/* Hide expandable content by default */
+/* Instruction block */
 
-.sk-expandable {
-  display: none;
-}
-
-/* Prompt prefix */
-
-pre.sk-expandable {
-  &[data-os="windows"] > span:before {
+div#skInstallInstructions {
+  &[data-os="windows"] pre.sk-install-prompt > span:before {
     content: "> ";
   }
 
-  &[data-os="linux"], &[data-os="mac"] {
-    > span:before {
+  &[data-os="linux"], &[data-os="macos"] {
+    pre.sk-install-prompt > span:before {
       content: "$ ";
     }
-  }
-}
-
-/* Show hidden content for specific packager */
-
-$packagertypes: conda pip;
-
-@each $packager in $packagertypes {
-  $selector: unquote("#quickstart-#{$packager}");
-
-  #{$selector}:checked ~* [data-packager="#{$packager}"] {
-    display: block;
-  }
-}
-
-/* Show hidden content for specific os */
-
-$ostypes: windows linux mac;
-
-@each $os in $ostypes {
-  $selector: unquote("#quickstart-#{$os}");
-
-  #{$selector}:not(:checked) ~* [data-os="#{$os}"] {
-    display: none;
-  }
-}
-
-/* venv-related */
-
-#quickstart-conda:checked ~ #quickstart-venv ~ label[for="quickstart-venv"] {
-  display: none;  // hide because venv not compatible with conda
-}
-
-#quickstart-venv {
-  &:not(:checked) ~* [data-venv=""] {
-    display: none;
-  }
-
-  &:checked ~* [data-venv="no"] {
-    display: none;
   }
 }

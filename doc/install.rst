@@ -28,140 +28,75 @@ There are different ways to install scikit-learn:
 Installing the latest release
 =============================
 
-.. Hack implementation of the awesome https://spacy.io/usage/#quickstart page.
-   Original implementation: https://github.com/ines/quickstart
-   Styling see scss/install.scss
-
+.. See js/scripts/install-instructions.js and scss/install.scss
 
 .. raw:: html
 
-  <div class="sk-install">
-    <!-- Choose OS -->
-    <strong>Operating System</strong>
-    <input type="radio" name="os" id="quickstart-windows" checked>
-    <label for="quickstart-windows">Windows</label>
-    <input type="radio" name="os" id="quickstart-mac">
-    <label for="quickstart-mac">macOS</label>
-    <input type="radio" name="os" id="quickstart-linux">
-    <label for="quickstart-linux">Linux</label>
-    <br>
-    <!-- Choose packager -->
-    <strong>Packager</strong>
-    <input type="radio" name="packager" id="quickstart-pip" checked>
-    <label for="quickstart-pip">pip</label>
-    <input type="radio" name="packager" id="quickstart-conda">
-    <label for="quickstart-conda">conda</label>
-    <br>
-    <!-- Whether to use venv -->
-    <input type="checkbox" name="config" id="quickstart-venv">
-    <label for="quickstart-venv">Use pip virtualenv</label>
+  <div class="sk-install-options-grid">
+    <div class="row">
+      <!-- Headings -->
+      <div class="col-md-3 headings">
+        <div class="col-md-12 title-block">
+          <div class="option-text">Operating System</div>
+        </div>
+        <div class="col-md-12 title-block">
+          <div class="option-text">Packager</div>
+        </div>
+        <div class="col-md-12 title-block">
+          <div class="option-text">Virtual Environment</div>
+        </div>
+      </div>
 
-    <p>
-      <!-- pip -->
-      <span class="sk-expandable" data-packager="pip" data-os="windows">
-        Install the 64bit version of Python 3, for instance from
-        <a href="https://www.python.org/">https://www.python.org</a>. Then run
-      </span>
-      <span class="sk-expandable" data-packager="pip" data-os="mac">
-        Install Python 3 using <a href="https://brew.sh/">homebrew</a>
-        (<code>brew install python</code>) or by manually installing the package from
-        <a href="https://www.python.org">https://www.python.org</a>. Then run
-      </span>
-      <span class="sk-expandable" data-packager="pip" data-os="linux">
-        Install python3 and python3-pip using the package manager of the Linux
-        Distribution. Then run
-      </span>
-      <!-- conda -->
-      <span class="sk-expandable" data-packager="conda">
-        Install conda using the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Anaconda or miniconda</a>
-        installers or the <a href="https://github.com/conda-forge/miniforge#miniforge">miniforge</a>
-        installers (no administrator permission required for any of those). Then run
-      </span>
-    </p>
-
-    <div class="highlight-console">
-      <div class="highlight">
-        <!-- pip without venv -->
-        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv="no"
-  ><span>pip3 install -U scikit-learn</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv="no"
-  ><span>pip install -U scikit-learn</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv="no"
-  ><span>pip install -U scikit-learn</span></pre>
-        <!-- pip with venv -->
-        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
-  ><span>python3 -m venv sklearn-venv</span>
-  <span>source sklearn-venv/bin/activate</span>
-  <span>pip3 install -U scikit-learn</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
-  ><span>python -m venv sklearn-venv</span>
-  <span>sklearn-venv\Scripts\activate</span>
-  <span>pip install -U scikit-learn</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
-  ><span>python -m venv sklearn-venv</span>
-  <span>source sklearn-venv/bin/activate</span>
-  <span>pip install -U scikit-learn</span></pre>
-        <!-- conda -->
-        <pre class="sk-expandable" data-packager="conda" data-os="linux"
-  ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
-  <span>conda activate sklearn-env</span></pre>
-        <pre class="sk-expandable" data-packager="conda" data-os="windows"
-  ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
-  <span>conda activate sklearn-env</span></pre>
-        <pre class="sk-expandable" data-packager="conda" data-os="mac"
-  ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
-  <span>conda activate sklearn-env</span></pre>
+      <!-- Options and headings for mobile phones -->
+      <div class="col-md-9">
+        <!-- Choose OS -->
+        <div class="row" id="osRow">
+          <div class="col-md-12 title-block mobile-heading">
+            <div class="option-text">Operating System</div>
+          </div>
+          <div class="col-md-4 option block" id="windows">
+            <div class="option-text">Windows</div>
+          </div>
+          <div class="col-md-4 option block" id="macos">
+            <div class="option-text">MacOS</div>
+          </div>
+          <div class="col-md-4 option block" id="linux">
+            <div class="option-text">Linux</div>
+          </div>
+        </div>
+        <!-- Choose Packager -->
+        <div class="row" id="packagerRow">
+          <div class="col-md-12 title-block mobile-heading">
+            <div class="option-text">Packager</div>
+          </div>
+          <div class="col-md-6 option block" id="pip">
+            <div class="option-text">Pip</div>
+          </div>
+          <div class="col-md-6 option block" id="conda">
+            <div class="option-text">Conda</div>
+          </div>
+        </div>
+        <!-- Choose virtual environment -->
+        <div class="row" id="virtualenvRow">
+          <div class="col-md-12 title-block mobile-heading">
+            <div class="option-text">Virtual Environment</div>
+          </div>
+          <div class="col-md-6 option block" id="venv">
+            <div class="option-text">Venv</div>
+          </div>
+          <div class="col-md-6 option block" id="novirtualenv">
+            <div class="option-text">None</div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-In order to check your installation you can use
+  <!-- The paragraph of instructions depending on the above selection -->
+  <div id="skInstallInstructions"></div>
 
-.. raw:: html
-
-    <div class="highlight-console">
-      <div class="highlight">
-        <!-- pip without venv -->
-        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv="no"
-  ><span>python3 -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
-  <span>python3 -m pip freeze  # to see all packages installed in the active virtualenv</span>
-  <span>python3 -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv="no"
-  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
-  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv="no"
-  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
-  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <!-- pip with venv -->
-        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
-  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
-  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
-  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
-  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
-  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
-  <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <!-- conda -->
-        <pre class="sk-expandable" data-packager="conda" data-os="linux"
-  ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
-  <span>conda list  # to see all packages installed in the active conda environment</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <pre class="sk-expandable" data-packager="conda" data-os="windows"
-  ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
-  <span>conda list  # to see all packages installed in the active conda environment</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-        <pre class="sk-expandable" data-packager="conda" data-os="mac"
-  ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
-  <span>conda list  # to see all packages installed in the active conda environment</span>
-  <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-      </div>
-    </div>
-  </div>  <!-- closing the outermost <div class="sk-install"> -->
+  <!-- Load the script after all the above elements are set -->
+  <script src="_static/scripts/install-instructions.js"></script>
 
 Note that in order to avoid potential conflicts with other packages it is
 strongly recommended to use a `virtual environment (venv)
