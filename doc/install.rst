@@ -36,125 +36,132 @@ Installing the latest release
 .. raw:: html
 
   <div class="sk-install">
-       <strong>Operating System</strong>
-          <input type="radio" name="os" id="quickstart-windows" checked>
-          <label for="quickstart-windows">Windows</label>
-          <input type="radio" name="os" id="quickstart-mac">
-          <label for="quickstart-mac">macOS</label>
-          <input type="radio" name="os" id="quickstart-linux">
-          <label for="quickstart-linux">Linux</label><br />
-       <strong>Packager</strong>
-          <input type="radio" name="packager" id="quickstart-pip" checked>
-          <label for="quickstart-pip">pip</label>
-          <input type="radio" name="packager" id="quickstart-conda">
-          <label for="quickstart-conda">conda</label><br />
-          <input type="checkbox" name="config" id="quickstart-venv">
-          <label for="quickstart-venv">venv</label>
+    <!-- Choose OS -->
+    <strong>Operating System</strong>
+    <input type="radio" name="os" id="quickstart-windows" checked>
+    <label for="quickstart-windows">Windows</label>
+    <input type="radio" name="os" id="quickstart-mac">
+    <label for="quickstart-mac">macOS</label>
+    <input type="radio" name="os" id="quickstart-linux">
+    <label for="quickstart-linux">Linux</label>
+    <br>
+    <!-- Choose packager -->
+    <strong>Packager</strong>
+    <input type="radio" name="packager" id="quickstart-pip" checked>
+    <label for="quickstart-pip">pip</label>
+    <input type="radio" name="packager" id="quickstart-conda">
+    <label for="quickstart-conda">conda</label>
+    <br>
+    <!-- Whether to use venv -->
+    <input type="checkbox" name="config" id="quickstart-venv">
+    <label for="quickstart-venv">Use pip virtualenv</label>
 
-.. raw:: html
+    <p>
+      <!-- pip -->
+      <span class="sk-expandable" data-packager="pip" data-os="windows">
+        Install the 64bit version of Python 3, for instance from
+        <a href="https://www.python.org/">https://www.python.org</a>. Then run
+      </span>
+      <span class="sk-expandable" data-packager="pip" data-os="mac">
+        Install Python 3 using <a href="https://brew.sh/">homebrew</a>
+        (<code>brew install python</code>) or by manually installing the package from
+        <a href="https://www.python.org">https://www.python.org</a>. Then run
+      </span>
+      <span class="sk-expandable" data-packager="pip" data-os="linux">
+        Install python3 and python3-pip using the package manager of the Linux
+        Distribution. Then run
+      </span>
+      <!-- conda -->
+      <span class="sk-expandable" data-packager="conda">
+        Install conda using the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Anaconda or miniconda</a>
+        installers or the <a href="https://github.com/conda-forge/miniforge#miniforge">miniforge</a>
+        installers (no administrator permission required for any of those). Then run
+      </span>
+    </p>
 
-       <div>
-         <span class="sk-expandable" data-packager="pip" data-os="windows">Install the 64bit version of Python 3, for instance from <a href="https://www.python.org/">https://www.python.org</a>.</span
-         ><span class="sk-expandable" data-packager="pip" data-os="mac">Install Python 3 using <a href="https://brew.sh/">homebrew</a> (<code>brew install python</code>) or by manually installing the package from <a href="https://www.python.org">https://www.python.org</a>.</span
-         ><span class="sk-expandable" data-packager="pip" data-os="linux">Install python3 and python3-pip using the package manager of the Linux Distribution.</span
-         ><span class="sk-expandable" data-packager="conda"
-            >Install conda using the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Anaconda or miniconda</a>
-             installers or the <a href="https://github.com/conda-forge/miniforge#miniforge">miniforge</a> installers
-             (no administrator permission required for any of those).</span>
-       </div>
-
-Then run:
-
-.. raw:: html
-
-  <div class="highlight">
-    <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv="no"
-    ><span>pip3 install -U scikit-learn</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv="no"
-    ><span>pip install -U scikit-learn</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv="no"
-    ><span>pip install -U scikit-learn</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
-    ><span>python3 -m venv sklearn-venv</span>
+    <div class="highlight-console">
+      <div class="highlight">
+        <!-- pip without venv -->
+        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv="no"
+  ><span>pip3 install -U scikit-learn</span></pre>
+        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv="no"
+  ><span>pip install -U scikit-learn</span></pre>
+        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv="no"
+  ><span>pip install -U scikit-learn</span></pre>
+        <!-- pip with venv -->
+        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
+  ><span>python3 -m venv sklearn-venv</span>
   <span>source sklearn-venv/bin/activate</span>
   <span>pip3 install -U scikit-learn</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
-    ><span>python -m venv sklearn-venv</span>
+        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
+  ><span>python -m venv sklearn-venv</span>
   <span>sklearn-venv\Scripts\activate</span>
   <span>pip install -U scikit-learn</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
-    ><span>python -m venv sklearn-venv</span>
+        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
+  ><span>python -m venv sklearn-venv</span>
   <span>source sklearn-venv/bin/activate</span>
   <span>pip install -U scikit-learn</span></pre>
-
-    <pre class="sk-expandable" data-os="linux" data-packager="conda"
-    ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
+        <!-- conda -->
+        <pre class="sk-expandable" data-packager="conda" data-os="linux"
+  ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
   <span>conda activate sklearn-env</span></pre>
-
-    <pre class="sk-expandable" data-os="windows" data-packager="conda"
-    ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
+        <pre class="sk-expandable" data-packager="conda" data-os="windows"
+  ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
   <span>conda activate sklearn-env</span></pre>
-
-    <pre class="sk-expandable" data-os="mac" data-packager="conda"
-    ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
+        <pre class="sk-expandable" data-packager="conda" data-os="mac"
+  ><span>conda create -n sklearn-env -c conda-forge scikit-learn</span>
   <span>conda activate sklearn-env</span></pre>
-  </div>
+      </div>
+    </div>
 
 In order to check your installation you can use
 
 .. raw:: html
 
-  <div class="highlight">
-    <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv="no"
-    ><span>python3 -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+    <div class="highlight-console">
+      <div class="highlight">
+        <!-- pip without venv -->
+        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv="no"
+  ><span>python3 -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python3 -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python3 -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv="no"
-    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv="no"
+  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv="no"
-    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv="no"
+  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
-    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+        <!-- pip with venv -->
+        <pre class="sk-expandable" data-packager="pip" data-os="linux" data-venv=""
+  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
-    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+        <pre class="sk-expandable" data-packager="pip" data-os="windows" data-venv=""
+  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-    <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
-    ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
+        <pre class="sk-expandable" data-packager="pip" data-os="mac" data-venv=""
+  ><span>python -m pip show scikit-learn  # to see which version and where scikit-learn is installed</span>
   <span>python -m pip freeze  # to see all packages installed in the active virtualenv</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-    <pre class="sk-expandable" data-packager="conda" data-os="linux"
-    ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
+        <!-- conda -->
+        <pre class="sk-expandable" data-packager="conda" data-os="linux"
+  ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
   <span>conda list  # to see all packages installed in the active conda environment</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-  <pre class="sk-expandable" data-packager="conda" data-os="windows"
-    ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
+        <pre class="sk-expandable" data-packager="conda" data-os="windows"
+  ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
   <span>conda list  # to see all packages installed in the active conda environment</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-
-  <pre class="sk-expandable" data-packager="conda" data-os="mac"
-    ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
+        <pre class="sk-expandable" data-packager="conda" data-os="mac"
+  ><span>conda list scikit-learn  # to see which scikit-learn version is installed</span>
   <span>conda list  # to see all packages installed in the active conda environment</span>
   <span>python -c "import sklearn; sklearn.show_versions()"</span></pre>
-  </div>
+      </div>
+    </div>
+  </div>  <!-- closing the outermost <div class="sk-install"> -->
 
 Note that in order to avoid potential conflicts with other packages it is
 strongly recommended to use a `virtual environment (venv)
@@ -342,11 +349,11 @@ Error caused by file path length limit on Windows
 
 It can happen that pip fails to install packages when reaching the default path
 size limit of Windows if Python is installed in a nested location such as the
-`AppData` folder structure under the user home directory, for instance::
+`AppData` folder structure under the user home directory, for instance:
 
-.. code-block:: bat
+.. code-block:: console
 
-  C:\Users\username>C:\Users\username\AppData\Local\Microsoft\WindowsApps\python.exe -m pip install scikit-learn
+  C:\Users\username>"C:\Users\username\AppData\Local\Microsoft\WindowsApps\python.exe" -m pip install scikit-learn
   Collecting scikit-learn
   ...
   Installing collected packages: scikit-learn
