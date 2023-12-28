@@ -4,6 +4,9 @@
 /* Installation options grid */
 
 div.sk-install-options-grid {
+  width: 95%;
+  margin: 1.15rem auto;
+
   div.headings {
     @media screen and (max-width: 768px) {
       display: none;  // hide on mobile
@@ -11,14 +14,26 @@ div.sk-install-options-grid {
   }
 
   div.title-block {
-    border: 2px solid #ccc;
+    position: relative;
     margin: .0625rem;
+    padding-left: 1rem;
     height: 2.5rem;
     font-size: 1rem;
-    color: #6c6c6d;
+    font-weight: bold;
+    color: var(--pst-color-text-base);
     line-height: 1.25rem;
     display: flex;
     align-items: center;
+
+    &:before {
+      display: block;
+      content: ".";
+      color: transparent;
+      border-left: 4px solid var(--pst-color-text-base);
+      height: 80%;
+      left: 0;
+      position: absolute;
+    }
 
     &.mobile-heading {
       @media screen and (min-width: 768px) {
@@ -35,12 +50,23 @@ div.sk-install-options-grid {
   }
 
   div.option {
-    border: 2px solid #fff;
+    border: 2px solid var(--pst-color-background);
+    color: var(--sk-text-dark);
     background-color: var(--sk-orange-lightest);
     cursor: pointer;
 
+    html[data-theme="dark"] & {
+      background-color: var(--sk-orange-darkest);
+      color: var(--sk-text-light);
+    }
+
     &.selected {
-      background-color: var(--sk-orange);
+      background-color: var(--sk-orange-light);
+
+      html[data-theme="dark"] & {
+        background-color: var(--sk-orange-light);
+        color: var(--sk-text-dark);
+      }
     }
   }
 }

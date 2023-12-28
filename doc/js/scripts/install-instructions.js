@@ -63,90 +63,122 @@ var pythonMapping = {
     "linux": "python3",
 }
 
-function getOpeningInstruction(os, packager) {
-    switch (packager) {
-        case "pip":
-            switch (os) {
-                case "windows":
-                    return `Install the 64-bit version of Python 3, for instance from <a href="https://www.python.org/">https://www.python.org</a>.`;
-                case "macos":
-                    return `Install Python 3 using <a href="https://brew.sh/">homebrew</a> (<code>brew install python</code>) or by manually installing the package from <a href="https://www.python.org">https://www.python.org</a>.`;
-                case "linux":
-                    return `Install python3 and python3-pip using the package manager of the Linux Distribution.`;
-                default:
-                    return "";
-            }
-        case "conda":
-            return`Install conda using the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Anaconda or miniconda</a> installers or the <a href="https://github.com/conda-forge/miniforge#miniforge">miniforge</a> installers (no administrator permission required for any of those).`;
-        default:
-            return "";
+function validateOptions(os, packager, virtualenv) {
+    if (packager === "conda") {
+        // strike out the venv option
+        virtualenvOptions.forEach(function (option) {
+            option.style.textDecoration = (option.id === "venv") ? "line-through" : "none";
+        });
+        if (virtualenv === "venv") {
+            return `Conda is not compatible with venv. Please select a different option.`;
+        } else {
+            return false;
+        }
+    } else {
+        // unstrike all options in virtualenv
+        virtualenvOptions.forEach(function (option) {
+            option.style.textDecoration = "none";
+        });
+        return false;
     }
 }
 
-function getVenvActivationInstruction(os) {
-    switch (os) {
-        case "windows":
-            return `sklearn-env\\Scripts\\activate`;
-        case "macos":
-            return `source sklearn-env/bin/activate`;
-        case "linux":
-            return `source sklearn-env/bin/activate`;
-        default:
-            return "";
-    }
-}
-
-function getCheckInstallInstruction(os, packager) {
-    switch (packager) {
-        case "pip":
-            return [
-                `${pythonMapping[os]} -m pip show scikit-learn  # to see which version and where scikit-learn is installed`,
-                `${pythonMapping[os]} -m pip freeze  # to see all packages installed in the active virtualenv`,
-                `${pythonMapping[os]} -c "import sklearn; sklearn.show_versions()"  # to see the versions of scikit-learn and its dependencies`,
-            ];
-        case "conda":
-            return [
-                `conda list scikit-learn  # to see which scikit-learn version is installed`,
-                `conda list  # to see all packages installed in the active conda environment`,
-                `python -c "import sklearn; sklearn.show_versions()"  # to see the versions of scikit-learn and its dependencies`,
-            ];
-        default:
-            return [];
-    }
-}
-
-function updateInstructions() {
+function getUpdatedInstruction() {
     var curOs = selectedOptions["os"];
     var curPackager = selectedOptions["packager"];
     var curVirtualenv = selectedOptions["virtualenv"];
+
+    var validationError = validateOptions(curOs, curPackager, curVirtualenv);
+    if (validationError) {
+        return `<div class="admonition error"><p class="admonition-title">Error</p><p>${validationError}</p></div>`;
+    }
     var instruction = "";
 
     // The opening paragraph
-    instruction += `<p>${getOpeningInstruction(curOs, curPackager)} Then run:</p>\n`;
+    instruction += `<p>`
+    switch (curPackager) {
+        case "pip":
+            switch (curOs) {
+                case "windows":
+                    instruction += `Install the 64-bit version of Python 3, for instance from <a href="https://www.python.org/">https://www.python.org</a>.`;
+                    break;
+                case "macos":
+                    instruction += `Install Python 3 using <a href="https://brew.sh/">homebrew</a> (<code>brew install python</code>) or by manually installing the package from <a href="https://www.python.org">https://www.python.org</a>.`;
+                    break;
+                case "linux":
+                    instruction += `Install python3 and python3-pip using the package manager of the Linux Distribution.`;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case "conda":
+            instruction += `Install conda using the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Anaconda or miniconda</a> installers or the <a href="https://github.com/conda-forge/miniforge#miniforge">miniforge</a> installers (no administrator permission required for any of those).`
+            break;
+        default:
+            break;
+    }
+    instruction += ` Then run:</p>\n`;
 
     // The code block for installation
-    instruction += `<div class="highlight-default "><div class="highlight"><pre class="sk-install-prompt">`;
-    if (curVirtualenv === "venv") {
-        instruction += `<span>${pythonMapping[curOs]} -m venv sklearn-env</span>\n`;
-        instruction += `<span>${getVenvActivationInstruction(curOs)}</span>\n`;
+    instruction += `<div class="highlight-default"><div class="highlight"><pre class="sk-install-prompt">`;
+    switch (curPackager) {
+        case "pip":
+            switch (curVirtualenv) {
+                case "venv":
+                    instruction += `<span>${pythonMapping[curOs]} -m venv sklearn-env</span>\n`;
+                    switch (curOs) {
+                        case "windows":
+                            instruction += `<span>sklearn-env\\Scripts\\activate</span>\n`;
+                            break;
+                        case "macos":
+                            instruction += `<span>source sklearn-env/bin/activate</span>\n`;
+                            break;
+                        case "linux":
+                            instruction += `<span>source sklearn-env/bin/activate</span>\n`;
+                            break;
+                        default:
+                            break;
+                    }
+                    // no break here because we always need the line in the default case
+                default:
+                    instruction += `<span>${pipMapping[curOs]} install -U scikit-learn</span>`;
+                    break;
+            }
+            break;
+        case "conda":
+            instruction += `<span>conda create -n sklearn-env -c conda-forge scikit-learn</span>\n`;
+            instruction += `<span>conda activate sklearn-env</span>`;
+            break;
+        default:
+            break;
     }
-    instruction += `<span>${pipMapping[curOs]} install -U scikit-learn</span>`;
     instruction += `</pre></div></div>`;
 
     // The code block for checking installation
     instruction += `<p>In order to check your installation you can use</p>`;
     instruction += `<div class="highlight-default"><div class="highlight"><pre class="sk-install-prompt">`;
-    var checkInstallInstrunction = getCheckInstallInstruction(curOs, curPackager);
-    for (var i = 0; i < checkInstallInstrunction.length; i++) {
-        instruction += `<span>${checkInstallInstrunction[i]}</span>`;
-        if (i < checkInstallInstrunction.length - 1) {
-            instruction += "\n";
-        }
+    switch (curPackager) {
+        case "pip":
+            instruction += `<span>${pythonMapping[curOs]} -m pip show scikit-learn  # show which version and where scikit-learn is installed</span>\n`;
+            instruction += `<span>${pythonMapping[curOs]} -m pip freeze             # show all packages installed in the current environment</span>\n`;
+            instruction += `<span>${pythonMapping[curOs]} -c "import sklearn; sklearn.show_versions()"</span>`
+            break;
+        case "conda":
+            instruction += `<span>conda list scikit-learn  # show which version and where scikit-learn is installed</span>\n`;
+            instruction += `<span>conda list               # show all packages installed in the current environment</span>\n`;
+            instruction += `<span>python -c "import sklearn; sklearn.show_versions()"</span>`
+            break;
+        default:
+            break;
     }
     instruction += `</pre></div></div>`;
-    instructionBlock.innerHTML = instruction;
-    instructionBlock.setAttribute("data-os", curOs);
+    return instruction;
+}
 
+function updateInstruction() {
+    instructionBlock.innerHTML = getUpdatedInstruction();
+    instructionBlock.setAttribute("data-os", selectedOptions["os"]);
     addCopyButtonToCodeCells();  // See copybutton.js from sphinx-copybutton
 }
 
@@ -172,10 +204,10 @@ function selectedOption(options, selection, category) {
         }
     });
     selectedOptions[category] = selection.id;
-    updateInstructions();
+    updateInstruction();
 }
 
 initOptions(osOptions, "os");
 initOptions(packagerOptions, "packager");
 initOptions(virtualenvOptions, "virtualenv");
-updateInstructions();
+updateInstruction();
