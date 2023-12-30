@@ -190,7 +190,7 @@ export OMP_NUM_THREADS=1
 if [[ "$CIRCLE_BRANCH" =~ ^main$ && -z "$CI_PULL_REQUEST" ]]
 then
     # List available documentation versions if on main
-    python build_tools/circle/list_versions.py > doc/versions.rst
+    python build_tools/circle/list_versions.py --json-loc doc/versions.json > doc/versions.rst
 fi
 
 
