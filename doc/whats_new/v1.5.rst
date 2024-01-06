@@ -25,6 +25,12 @@ Changelog
     :pr:`123456` by :user:`Joe Bloggs <joeongithub>`.
     where 123455 is the *pull request* number, not the issue number.
 
+:mod:`sklearn.impute`
+.....................
+- |Enhancement| :class:`impute.SimpleImputer` now supports custom strategies
+  by passing a function in place of a strategy name.
+  :pr:`28053` by :user:`Mark Elliot <mark-thm>`.
+
 Code and Documentation Contributors
 -----------------------------------
 
@@ -32,3 +38,9 @@ Thanks to everyone who has contributed to the maintenance and improvement of
 the project since version 1.4, including:
 
 TODO: update at the time of the release.
+
+:mod:`sklearn.compose`
+......................
+
+- |Feature| A fitted :class:`compose.ColumnTransformer` now implements `__getitem__`
+  which returns the fitted transformers by name. :pr:`27990` by `Thomas Fan`_.
