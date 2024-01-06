@@ -142,6 +142,7 @@ import sklearn
 
 parsed_version = parse(sklearn.__version__)
 version = ".".join(parsed_version.base_version.split(".")[:2])
+is_devrelease = parsed_version.is_devrelease
 # The full version, including alpha/beta/rc tags.
 # Removes post from release name
 if parsed_version.is_postrelease:
@@ -361,8 +362,8 @@ html_copy_source = True
 
 # Adds variables into templates
 html_context = {}
-# finds latest release highlights and places it into HTML context for
-# index.html
+
+# Finds latest release highlights and places it into HTML context for index.html
 release_highlights_dir = Path("..") / "examples" / "release_highlights"
 # Finds the highlight with the latest version number
 latest_highlights = sorted(release_highlights_dir.glob("plot_release_highlights_*.py"))[
@@ -373,10 +374,13 @@ html_context["release_highlights"] = (
     f"auto_examples/release_highlights/{latest_highlights}"
 )
 
-# get version from highlight name assuming highlights have the form
+# Get version from highlight name assuming highlights have the form
 # plot_release_highlights_0_22_0
 highlight_version = ".".join(latest_highlights.split("_")[-3:-1])
 html_context["release_highlights_version"] = highlight_version
+
+# See PR #22550
+html_context["is_devrelease"] = is_devrelease
 
 
 # redirects dictionary maps from old links to new links
@@ -767,6 +771,47 @@ def generate_min_dependency_substitutions(app):
         f.write(output)
 
 
+def generate_table_of_contents(app):
+    """Generate table of contents for docs, i.e., contents.rst."""
+    # See PR #22550
+    development_link = (
+        "developers/index"
+        if is_devrelease
+        else "https://scikit-learn.org/dev/developers/index.html"
+    )
+    contents = f"""
+=================
+Table Of Contents
+=================
+
+.. Define an order for the Table of Contents:
+
+.. toctree::
+    :maxdepth: 2
+
+    Install <install>
+    user_guide
+    API <modules/classes>
+    auto_examples/index
+    Community <https://blog.scikit-learn.org/>
+    getting_started
+    Tutorials <tutorial/index>
+    whats_new
+    Glossary <glossary>
+    Development <{development_link}>
+    FAQ <faq>
+    support
+    related_projects
+    roadmap
+    Governance <governance>
+    about
+    Other Versions and Download <https://scikit-learn.org/dev/versions.html>
+"""
+
+    with (Path(".") / "contents.rst").open("w") as f:
+        f.write(contents)
+
+
 # Config for sphinx_issues
 
 # we use the issues path for PRs since the issues URL will forward
@@ -784,6 +829,7 @@ def setup(app):
     app.connect("builder-inited", disable_plot_gallery_for_linkcheck, priority=50)
     app.connect("builder-inited", generate_min_dependency_table)
     app.connect("builder-inited", generate_min_dependency_substitutions)
+    app.connect("builder-inited", generate_table_of_contents)
 
     # to hide/show the prompt in code examples:
     app.connect("build-finished", make_carousel_thumbs)
