@@ -60,6 +60,7 @@ extensions = [
     "sphinxext.opengraph",
     "matplotlib.sphinxext.plot_directive",
     "sphinxcontrib.sass",
+    "sphinx_remove_toctrees",
     # See sphinxext/
     "add_toctree_functions",
     "allow_nan_estimators",
@@ -197,7 +198,6 @@ html_additional_pages = {"index": "index.html"}
 # https://pydata-sphinx-theme.readthedocs.io/en/stable/user_guide/layout.html#references
 html_theme_options = {
     # -- General configuration ------------------------------------------------
-    "sidebarwidth": 230,
     "sidebar_includehidden": True,
     "use_edit_page_button": True,
     "external_links": [],
@@ -284,7 +284,7 @@ html_theme_options = {
     "footer_center": [],
     "footer_end": [],
     # Use :html_theme.sidebar_secondary.remove: for file-wide removal
-    "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
+    "secondary_sidebar_items": ["page-toc", "sourcelink"],
     "show_version_warning_banner": True,
     "announcement": [],
 }
@@ -780,6 +780,8 @@ def generate_table_of_contents(app):
         else "https://scikit-learn.org/dev/developers/index.html"
     )
     contents = f"""
+.. include:: includes/big_toc_css.rst
+
 =================
 Table Of Contents
 =================
@@ -878,7 +880,6 @@ autosummary_filename_map = {
     "sklearn.decomposition.fastica": "fastica-function",
 }
 
-
 # Config for sphinxext.opengraph
 
 ogp_site_url = "https://scikit-learn/stable/"
@@ -948,6 +949,10 @@ linkcheck_ignore = [
     r"https://stackoverflow.com/questions/5836335/"
     "consistently-create-same-random-numpy-array/5837352#comment6712034_5837352",
 ]
+
+# Config for sphinx-remove-toctrees
+
+remove_from_toctrees = ["metadata_routing.rst"]
 
 # Use a browser-like user agent to avoid some "403 Client Error: Forbidden for
 # url" errors. This is taken from the variable navigator.userAgent inside a

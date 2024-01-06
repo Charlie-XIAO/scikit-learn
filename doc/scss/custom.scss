@@ -8,6 +8,11 @@ button.search-button {
   padding: 0;
 }
 
+/** Fix the width of the primary sidebar */
+.bd-sidebar-primary {
+  width: 20em;
+}
+
 /** pydata-sphinx-theme unsets margin-bottom for the version switcher button only when
   * screen width >= 960px, causing the button to not align with other icons when screen
   * width is small */
