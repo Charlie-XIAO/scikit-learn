@@ -274,7 +274,10 @@ html_theme_options = {
     "navbar_end": ["theme-switcher", "navbar-icon-links", "version-switcher"],
     # navbar_persistent is persistent right (even when on mobiles)
     "navbar_persistent": ["search-button"],
-    "article_header_start": ["breadcrumbs"],
+    # TODO: replace "breadcrumbs.html" with "breadcrumbs" when pydata-sphinx-theme
+    # > 0.15.1 and remove doc/templates/vendored/breadcrumbs.html. For more details see
+    # the comments in that vendored template file
+    "article_header_start": ["vendored/breadcrumbs.html"],
     "article_header_end": [],
     "article_footer_items": ["prev-next"],
     "content_footer_items": [],
