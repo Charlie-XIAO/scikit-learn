@@ -1,2 +1,16 @@
 /** This is a general styling sheet.
   * It is mainly used to override the default styling of pydata-sphinx-theme. */
+
+/** The search button in pydata-sphinx-theme, when used as "search-button" instead of
+  * "search-button-field", has a strange bottom padding that cause it to not align with
+  * other buttons in the navbar */
+button.search-button {
+  padding: 0;
+}
+
+/** pydata-sphinx-theme unsets margin-bottom for the version switcher button only when
+  * screen width >= 960px, causing the button to not align with other icons when screen
+  * width is small */
+button.btn.version-switcher__button {
+  margin-bottom: unset;
+}
