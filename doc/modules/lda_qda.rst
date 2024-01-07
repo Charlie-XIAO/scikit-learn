@@ -17,11 +17,10 @@ These classifiers are attractive because they have closed-form solutions that
 can be easily computed, are inherently multiclass, have proven to work well in
 practice, and have no hyperparameters to tune.
 
-.. |ldaqda| image:: ../auto_examples/classification/images/sphx_glr_plot_lda_qda_001.png
-        :target: ../auto_examples/classification/plot_lda_qda.html
-        :scale: 80
-
-.. centered:: |ldaqda|
+.. figure:: ../auto_examples/classification/images/sphx_glr_plot_lda_qda_001.png
+   :target: ../auto_examples/classification/plot_lda_qda.html
+   :align: center
+   :scale: 80%
 
 The plot shows decision boundaries for Linear Discriminant Analysis and
 Quadratic Discriminant Analysis. The bottom row demonstrates that Linear
@@ -91,12 +90,13 @@ where the constant term :math:`Cst` corresponds to the denominator
 :math:`P(x)`, in addition to other constant terms from the Gaussian. The
 predicted class is the one that maximises this log-posterior.
 
-.. note:: **Relation with Gaussian Naive Bayes**
+.. admonition:: Note: Relation with Gaussian Naive Bayes
+    :class: note
 
-	  If in the QDA model one assumes that the covariance matrices are diagonal,
-	  then the inputs are assumed to be conditionally independent in each class,
-	  and the resulting classifier is equivalent to the Gaussian Naive Bayes
-	  classifier :class:`naive_bayes.GaussianNB`.
+    If in the QDA model one assumes that the covariance matrices are diagonal,
+    then the inputs are assumed to be conditionally independent in each class,
+    and the resulting classifier is equivalent to the Gaussian Naive Bayes
+    classifier :class:`naive_bayes.GaussianNB`.
 
 LDA
 ---
@@ -194,7 +194,7 @@ Oracle Approximating Shrinkage estimator :class:`sklearn.covariance.OAS`
 yields a smaller Mean Squared Error than the one given by Ledoit and Wolf's
 formula used with shrinkage="auto". In LDA, the data are assumed to be gaussian
 conditionally to the class. If these assumptions hold, using LDA with
-the OAS estimator of covariance will yield a better classification 
+the OAS estimator of covariance will yield a better classification
 accuracy than if Ledoit and Wolf or the empirical covariance estimator is used.
 
 The covariance estimator can be chosen using with the ``covariance_estimator``
@@ -204,11 +204,11 @@ class. A covariance estimator should have a :term:`fit` method and a
 :mod:`sklearn.covariance` module.
 
 
-.. |shrinkage| image:: ../auto_examples/classification/images/sphx_glr_plot_lda_001.png
-        :target: ../auto_examples/classification/plot_lda.html
-        :scale: 75
+.. figure:: ../auto_examples/classification/images/sphx_glr_plot_lda_001.png
+   :target: ../auto_examples/classification/plot_lda.html
+   :align: center
+   :scale: 75%
 
-.. centered:: |shrinkage|
 
 .. topic:: Examples:
 
