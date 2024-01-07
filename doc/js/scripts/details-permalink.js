@@ -1,18 +1,26 @@
-// Function to create permalink into <details> elements to be able to link them
-// The assumption is that such a block will be defined as follows:
-//     <details id="summary-anchor">
-//     <summary class="btn btn-light">
-//     Some title
-//     <span class="tooltiptext">Click for more details</span>
-//     <a class="headerlink" href="#summary-anchor" title="Permalink to this heading">¶</a>
-//     </summary>
-//     <div class="card">
-//     Some details
-//     </div>
-//     </details>
-// We seek to replace `#summary-anchor` with a unique identifier based on the
-// summary text.
-// This syntax is defined in `doc/conf.py` in the `rst_prolog` variable.
+/** Function to create permalink into <details> elements to be able to link them
+  * The assumption is that such a block will be defined as follows:
+  *
+  *   <p></p>
+  *   <details class="sk-dropdown" id="summary-anchor">
+  *     <summary class="sk-summary-title">
+  *       Some title
+  *       <a class="headerlink" href="#summary-anchor" title="Link to this heading">#</a>
+  *       <div class="sk-summary-down"><i class="fa-solid fa-chevron-down"></i></div>
+  *       <div class="sk-summary-up"><i class="fa-solid fa-chevron-up"></i></div>
+  *     </summary>
+  *     <div class="sk-dropdown-content">
+  *       <p></p>
+  *       Some details
+  *       <p></p>
+  *     </div>
+  *   </details>
+  *   <p></p>
+  *
+  * We seek to replace `#summary-anchor` with a unique identifier based on the
+  * summary text. This syntax is defined in `doc/conf.py` in the `rst_prolog` variable.
+*/
+
 function updateIdAndHrefBasedOnSummaryText() {
     var allDetailsElements = document.querySelectorAll('details');
     // Counter to store the duplicated summary text to add it as a suffix in the
