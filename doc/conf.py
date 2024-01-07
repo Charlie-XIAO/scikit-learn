@@ -323,6 +323,7 @@ html_js_files = ["scripts/details-permalink.js"]
 html_css_file_names = [
     "colors",
     "custom",
+    "dropdown",
     "index",
     "install",
 ]
@@ -424,19 +425,20 @@ html_show_search_summary = True
 
 
 # The "summary-anchor" IDs will be overwritten via JavaScript to be unique.
-# See `doc/theme/scikit-learn-modern/static/js/details-permalink.js`.
+# See doc/js/scripts/details-permalink.js.
 rst_prolog = """
 .. |details-start| raw:: html
 
-    <details id="summary-anchor">
-    <summary class="btn btn-light">
+    <details class="sk-dropdown" id="summary-anchor">
+    <summary class="sk-summary-title">
 
 .. |details-split| raw:: html
 
-    <span class="tooltiptext">Click for more details</span>
-    <a class="headerlink" href="#summary-anchor" title="Permalink to this heading">¶</a>
+    <a class="headerlink" href="#summary-anchor" title="Link to this heading">#</a>
+    <div class="sk-summary-down"><i class="fa-solid fa-chevron-down"></i></div>
+    <div class="sk-summary-up"><i class="fa-solid fa-chevron-up"></i></div>
     </summary>
-    <div class="card">
+    <div class="sk-dropdown-content">
 
 .. |details-end| raw:: html
 

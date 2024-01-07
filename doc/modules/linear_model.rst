@@ -212,13 +212,13 @@ example `cv=10` for 10-fold cross-validation, rather than Leave-One-Out
 Cross-Validation.
 
 |details-start|
-**References**
+References
 |details-split|
 
-    * "Notes on Regularized Least Squares", Rifkin & Lippert (`technical report
-      <http://cbcl.mit.edu/publications/ps/MIT-CSAIL-TR-2007-025.pdf>`_,
-      `course slides
-      <https://www.mit.edu/~9.520/spring07/Classes/rlsslides.pdf>`_).
+* "Notes on Regularized Least Squares", Rifkin & Lippert (`technical report
+  <http://cbcl.mit.edu/publications/ps/MIT-CSAIL-TR-2007-025.pdf>`_,
+  `course slides
+  <https://www.mit.edu/~9.520/spring07/Classes/rlsslides.pdf>`_).
 
 |details-end|
 
@@ -267,14 +267,15 @@ computes the coefficients along the full path of possible values.
   * :ref:`sphx_glr_auto_examples_inspection_plot_linear_model_coefficient_interpretation.py`
 
 
-.. note:: **Feature selection with Lasso**
+.. admonition:: Note: Feature selection with Lasso
+      :class: note
 
       As the Lasso regression yields sparse models, it can
       thus be used to perform feature selection, as detailed in
       :ref:`l1_feature_selection`.
 
 |details-start|
-**References**
+References
 |details-split|
 
 The following two references explain the iterations
@@ -361,7 +362,7 @@ section, we give more information regarding the criterion computed in
 scikit-learn.
 
 |details-start|
-**Mathematical details**
+Mathematical details
 |details-split|
 
 The AIC criterion is defined as:
@@ -459,15 +460,13 @@ the MultiTaskLasso are full columns.
 
 .. centered:: |multi_task_lasso_1| |multi_task_lasso_2|
 
-.. centered:: Fitting a time-series model, imposing that any active feature be active at all times.
-
 .. topic:: Examples:
 
   * :ref:`sphx_glr_auto_examples_linear_model_plot_multi_task_lasso_support.py`
 
 
 |details-start|
-**Mathematical details**
+Mathematical details
 |details-split|
 
 Mathematically, it consists of a linear model trained with a mixed
@@ -530,7 +529,7 @@ The class :class:`ElasticNetCV` can be used to set the parameters
   * :ref:`sphx_glr_auto_examples_linear_model_plot_lasso_coordinate_descent_path.py`
 
 |details-start|
-**References**
+References
 |details-split|
 
 The following two references explain the iterations
@@ -587,30 +586,30 @@ between the features.
 
 The advantages of LARS are:
 
-  - It is numerically efficient in contexts where the number of features
-    is significantly greater than the number of samples.
+- It is numerically efficient in contexts where the number of features
+  is significantly greater than the number of samples.
 
-  - It is computationally just as fast as forward selection and has
-    the same order of complexity as ordinary least squares.
+- It is computationally just as fast as forward selection and has
+  the same order of complexity as ordinary least squares.
 
-  - It produces a full piecewise linear solution path, which is
-    useful in cross-validation or similar attempts to tune the model.
+- It produces a full piecewise linear solution path, which is
+  useful in cross-validation or similar attempts to tune the model.
 
-  - If two features are almost equally correlated with the target,
-    then their coefficients should increase at approximately the same
-    rate. The algorithm thus behaves as intuition would expect, and
-    also is more stable.
+- If two features are almost equally correlated with the target,
+  then their coefficients should increase at approximately the same
+  rate. The algorithm thus behaves as intuition would expect, and
+  also is more stable.
 
-  - It is easily modified to produce solutions for other estimators,
-    like the Lasso.
+- It is easily modified to produce solutions for other estimators,
+  like the Lasso.
 
 The disadvantages of the LARS method include:
 
-  - Because LARS is based upon an iterative refitting of the
-    residuals, it would appear to be especially sensitive to the
-    effects of noise. This problem is discussed in detail by Weisberg
-    in the discussion section of the Efron et al. (2004) Annals of
-    Statistics article.
+- Because LARS is based upon an iterative refitting of the
+  residuals, it would appear to be especially sensitive to the
+  effects of noise. This problem is discussed in detail by Weisberg
+  in the discussion section of the Efron et al. (2004) Annals of
+  Statistics article.
 
 The LARS model can be used via the estimator :class:`Lars`, or its
 low-level implementation :func:`lars_path` or :func:`lars_path_gram`.
@@ -648,7 +647,7 @@ is to retrieve the path with one of the functions :func:`lars_path`
 or :func:`lars_path_gram`.
 
 |details-start|
-**Mathematical formulation**
+Mathematical formulation
 |details-split|
 
 The algorithm is similar to forward stepwise regression, but instead
@@ -704,14 +703,14 @@ previously chosen dictionary elements.
  * :ref:`sphx_glr_auto_examples_linear_model_plot_omp.py`
 
 |details-start|
-**References**
+References
 |details-split|
 
-  * https://www.cs.technion.ac.il/~ronrubin/Publications/KSVD-OMP-v2.pdf
+* https://www.cs.technion.ac.il/~ronrubin/Publications/KSVD-OMP-v2.pdf
 
-  * `Matching pursuits with time-frequency dictionaries
-    <https://www.di.ens.fr/~mallat/papiers/MallatPursuit93.pdf>`_,
-    S. G. Mallat, Z. Zhang,
+* `Matching pursuits with time-frequency dictionaries
+  <https://www.di.ens.fr/~mallat/papiers/MallatPursuit93.pdf>`_,
+  S. G. Mallat, Z. Zhang,
 
 |details-end|
 
@@ -743,24 +742,24 @@ estimated from the data.
 
 The advantages of Bayesian Regression are:
 
-    - It adapts to the data at hand.
+- It adapts to the data at hand.
 
-    - It can be used to include regularization parameters in the
-      estimation procedure.
+- It can be used to include regularization parameters in the
+  estimation procedure.
 
 The disadvantages of Bayesian regression include:
 
-    - Inference of the model can be time consuming.
+- Inference of the model can be time consuming.
 
 |details-start|
-**References**
+References
 |details-split|
 
-  * A good introduction to Bayesian methods is given in C. Bishop: Pattern
-    Recognition and Machine learning
+* A good introduction to Bayesian methods is given in C. Bishop: Pattern
+  Recognition and Machine learning
 
-  * Original Algorithm is detailed in the  book `Bayesian learning for neural
-    networks` by Radford M. Neal
+* Original Algorithm is detailed in the  book `Bayesian learning for neural
+  networks` by Radford M. Neal
 
 |details-end|
 
@@ -824,14 +823,14 @@ is more robust to ill-posed problems.
  * :ref:`sphx_glr_auto_examples_linear_model_plot_bayesian_ridge_curvefit.py`
 
 |details-start|
-**References**
+References
 |details-split|
 
-  * Section 3.3 in Christopher M. Bishop: Pattern Recognition and Machine Learning, 2006
+* Section 3.3 in Christopher M. Bishop: Pattern Recognition and Machine Learning, 2006
 
-  * David J. C. MacKay, `Bayesian Interpolation <https://citeseerx.ist.psu.edu/doc_view/pid/b14c7cc3686e82ba40653c6dff178356a33e5e2c>`_, 1992.
+* David J. C. MacKay, `Bayesian Interpolation <https://citeseerx.ist.psu.edu/doc_view/pid/b14c7cc3686e82ba40653c6dff178356a33e5e2c>`_, 1992.
 
-  * Michael E. Tipping, `Sparse Bayesian Learning and the Relevance Vector Machine <https://www.jmlr.org/papers/volume1/tipping01a/tipping01a.pdf>`_, 2001.
+* Michael E. Tipping, `Sparse Bayesian Learning and the Relevance Vector Machine <https://www.jmlr.org/papers/volume1/tipping01a/tipping01a.pdf>`_, 2001.
 
 |details-end|
 
@@ -898,14 +897,16 @@ This implementation can fit binary, One-vs-Rest, or multinomial logistic
 regression with optional :math:`\ell_1`, :math:`\ell_2` or Elastic-Net
 regularization.
 
-.. note:: **Regularization**
+.. admonition:: Note: Regularization
+    :class: note
 
     Regularization is applied by default, which is common in machine
     learning but not in statistics. Another advantage of regularization is
     that it improves numerical stability. No regularization amounts to
     setting C to a very high value.
 
-.. note:: **Logistic Regression as a special case of the Generalized Linear Models (GLM)**
+.. admonition:: Note: Logistic Regression as a special case of the Generalized Linear Models (GLM)
+    :class: note
 
     Logistic regression is a special case of
     :ref:`generalized_linear_models` with a Binomial / Bernoulli conditional
@@ -995,7 +996,7 @@ logistic regression, see also `log-linear model
    detrimental for unpenalized models since then the solution may not be unique, as shown in [16]_.
 
 |details-start|
-**Mathematical details**
+Mathematical details
 |details-split|
 
 Let :math:`y_i \in {1, \ldots, K}` be the label (ordinal) encoded target variable for observation :math:`i`.
@@ -1085,7 +1086,7 @@ zero, is likely to be a underfit, bad model and you are advised to set
 ``fit_intercept=True`` and increase the ``intercept_scaling``.
 
 |details-start|
-**Solvers' details**
+Solvers' details
 |details-split|
 
 * The solver "liblinear" uses a coordinate descent (CD) algorithm, and relies
@@ -1155,13 +1156,15 @@ For a comparison of some of these solvers, see [9]_.
 |details-end|
 
 
-.. note:: **Feature selection with sparse logistic regression**
+.. admonition:: Note: Feature selection with sparse logistic regression
+    :class: note
 
-   A logistic regression with :math:`\ell_1` penalty yields sparse models, and can
-   thus be used to perform feature selection, as detailed in
-   :ref:`l1_feature_selection`.
+    A logistic regression with :math:`\ell_1` penalty yields sparse models, and can
+    thus be used to perform feature selection, as detailed in
+    :ref:`l1_feature_selection`.
 
-.. note:: **P-value estimation**
+.. admonition:: Note: P-value estimation
+    :class: note
 
     It is possible to obtain the p-values and confidence intervals for
     coefficients in cases of regression without penalization. The `statsmodels
@@ -1251,7 +1254,7 @@ The choice of the distribution depends on the problem at hand:
 
 
 |details-start|
-**Examples of use cases**
+Examples of use cases
 |details-split|
 
 * Agriculture / weather modeling:  number of rain events per year (Poisson),
@@ -1321,7 +1324,7 @@ Usage example::
   * :ref:`sphx_glr_auto_examples_linear_model_plot_tweedie_regression_insurance_claims.py`
 
 |details-start|
-**Practical considerations**
+Practical considerations
 |details-split|
 
 The feature matrix `X` should be standardized before fitting. This ensures
@@ -1372,11 +1375,11 @@ Perceptron
 The :class:`Perceptron` is another simple classification algorithm suitable for
 large scale learning. By default:
 
-    - It does not require a learning rate.
+- It does not require a learning rate.
 
-    - It is not regularized (penalized).
+- It is not regularized (penalized).
 
-    - It updates its model only on mistakes.
+- It updates its model only on mistakes.
 
 The last characteristic implies that the Perceptron is slightly faster to
 train than SGD with the hinge loss and that the resulting models are
@@ -1404,12 +1407,12 @@ For classification, :class:`PassiveAggressiveClassifier` can be used with
 ``loss='squared_epsilon_insensitive'`` (PA-II).
 
 |details-start|
-**References**
+References
 |details-split|
 
- * `"Online Passive-Aggressive Algorithms"
-   <http://jmlr.csail.mit.edu/papers/volume7/crammer06a/crammer06a.pdf>`_
-   K. Crammer, O. Dekel, J. Keshat, S. Shalev-Shwartz, Y. Singer - JMLR 7 (2006)
+* `"Online Passive-Aggressive Algorithms"
+  <http://jmlr.csail.mit.edu/papers/volume7/crammer06a/crammer06a.pdf>`_
+  K. Crammer, O. Dekel, J. Keshat, S. Shalev-Shwartz, Y. Singer - JMLR 7 (2006)
 
 |details-end|
 
@@ -1527,7 +1530,7 @@ estimated only from the determined inliers.
   * :ref:`sphx_glr_auto_examples_linear_model_plot_robust_fit.py`
 
 |details-start|
-**Details of the algorithm**
+Details of the algorithm
 |details-split|
 
 Each iteration performs the following steps:
@@ -1558,7 +1561,7 @@ performance.
 |details-end|
 
 |details-start|
-**References**
+References
 |details-split|
 
 * https://en.wikipedia.org/wiki/RANSAC
@@ -1590,7 +1593,7 @@ better than an ordinary least squares in high dimension.
 
 
 |details-start|
-**Theoretical considerations**
+Theoretical considerations
 |details-split|
 
 :class:`TheilSenRegressor` is comparable to the :ref:`Ordinary Least Squares
@@ -1656,7 +1659,7 @@ but gives a lesser weight to them.
   * :ref:`sphx_glr_auto_examples_linear_model_plot_huber_vs_ridge.py`
 
 |details-start|
-**Mathematical details**
+Mathematical details
 |details-split|
 
 The loss function that :class:`HuberRegressor` minimizes is given by
@@ -1738,7 +1741,7 @@ problem. The current implementation is based on
   * :ref:`sphx_glr_auto_examples_linear_model_plot_quantile_regression.py`
 
 |details-start|
-**Mathematical details**
+Mathematical details
 |details-split|
 
 As a linear model, the :class:`QuantileRegressor` gives linear predictions
@@ -1771,7 +1774,7 @@ Somewhat in between is the :class:`HuberRegressor`.
 |details-end|
 
 |details-start|
-**References**
+References
 |details-split|
 
 * Koenker, R., & Bassett Jr, G. (1978). `Regression quantiles.
@@ -1801,7 +1804,7 @@ fast performance of linear methods, while allowing them to fit a much wider
 range of data.
 
 |details-start|
-**Mathematical details**
+Mathematical details
 |details-split|
 
 For example, a simple linear regression can be extended by constructing
