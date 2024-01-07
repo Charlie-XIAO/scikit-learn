@@ -29,8 +29,8 @@ div.sk-install-options-grid {
       display: block;
       content: ".";
       color: transparent;
-      border-left: 4px solid var(--pst-color-text-base);
-      height: 80%;
+      border-left: 2px solid var(--pst-color-text-base);
+      height: 60%;
       left: 0;
       position: absolute;
     }
@@ -51,6 +51,7 @@ div.sk-install-options-grid {
 
   div.option {
     border: 2px solid var(--pst-color-background);
+    border-radius: 5px;
     color: var(--sk-text-dark);
     background-color: var(--sk-orange-lightest);
     cursor: pointer;
@@ -75,7 +76,7 @@ div.sk-install-options-grid {
 
 div#skInstallInstructions {
   &[data-os="windows"] pre.sk-install-prompt > span:before {
-    content: "> ";
+    content: "C:\\> ";
   }
 
   &[data-os="linux"], &[data-os="macos"] {

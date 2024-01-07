@@ -268,7 +268,7 @@ with `scikit-learn-intelex`, please report the issue on their
 
 
 WinPython for Windows
------------------------
+---------------------
 
 The `WinPython <https://winpython.github.io/>`_ project distributes
 scikit-learn as an additional plugin.
@@ -284,15 +284,13 @@ Error caused by file path length limit on Windows
 
 It can happen that pip fails to install packages when reaching the default path
 size limit of Windows if Python is installed in a nested location such as the
-`AppData` folder structure under the user home directory, for instance:
+`AppData` folder structure under the user home directory, for instance::
 
-.. code-block:: console
-
-  C:\Users\username>"C:\Users\username\AppData\Local\Microsoft\WindowsApps\python.exe" -m pip install scikit-learn
-  Collecting scikit-learn
-  ...
-  Installing collected packages: scikit-learn
-  ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\username\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.7_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python37\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\292\\api-v1-json-data-list-data_name-australian-limit-2-data_version-1-status-deactivated.json.gz'
+    C:\Users\username>"C:\Users\username\AppData\Local\Microsoft\WindowsApps\python.exe" -m pip install scikit-learn
+    Collecting scikit-learn
+    ...
+    Installing collected packages: scikit-learn
+    ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\username\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.7_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python37\\site-packages\\sklearn\\datasets\\tests\\data\\openml\\292\\api-v1-json-data-list-data_name-australian-limit-2-data_version-1-status-deactivated.json.gz'
 
 In this case it is possible to lift that limit in the Windows registry by
 using the ``regedit`` tool:
@@ -308,6 +306,6 @@ using the ``regedit`` tool:
 
 #. Reinstall scikit-learn (ignoring the previous broken installation):
 
-.. prompt:: bat >
+.. prompt:: batch C:\\>
 
     pip install --exists-action=i scikit-learn

@@ -1,14 +1,16 @@
 {# This file is vendored from pydata-sphinx-theme with modifications. #}
 {# https://github.com/pydata/pydata-sphinx-theme/blob/c25f2333cec5c373a9228b8c2ba6403a08eacbda/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/components/breadcrumbs.html #}
 {# The reason is that if a title has section number, for instance, #}
-{# <span class="section-number">1. </span>Supervised learning</span> #}
-{# then directly truncating it will break the HTML. pydata-sphinx-theme PR #1583 #}
-{# decided to use ellipsis, which will naturally fix this problem as a side effect. #}
+{# <span class="section-number">1. </span>Supervised learning #}
+{# then directly truncating it will break the HTML. This file is just simply removing #}
+{# the truncate for now, though this may cause breadcrumbs to go out of the screen. #}
+
+{# pydata-sphinx-theme PR #1583 may fix this issue as a side effect. #}
 {# Reference: https://github.com/pydata/pydata-sphinx-theme/pull/1583 #}
 
-{# TODO: change the vendored commit when the aforementioned PR is merged, so that #}
-{# this file would become completely vendored without modification. #}
-{# TODO: remove this file when pydata-sphinx-theme > 0.15.1 #}
+{# TODO: change when the aforementioned PR is merged #}
+{# TODO: remove this file when pydata-sphinx-theme > 0.15.1 (or any version that has) #}
+{# this problem resolved. #}
 
 {# Displays (and links to) the parent section(s) of the currently viewed page. #}
 {%- block breadcrumbs %}
@@ -19,27 +21,6 @@
 {% if parents|length>2 %}
 {% set parents=[parents[0], {"title": '<i class="fa-solid fa-ellipsis"></i>'}, parents[-1]] %}
 {% endif %}
-
-<style>
-  ul.bd-breadcrumbs {
-    flex-wrap: nowrap;
-  }
-
-  li.breadcrumb-item {
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  li.breadcrumb-item.active {
-    flex-shrink: 1;
-    overflow-x: hidden;
-  }
-
-  li.breadcrumb-item.active .ellipsis {
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-  }
-</style>
 
 {#- Hide breadcrumbs on the home page #}
 {% if title and pagename != root_doc %}
@@ -58,7 +39,7 @@
     <li class="breadcrumb-item">{{ doc.title }}</li>
     {% endif %}
     {%- endfor %}
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">{{ title }}</span></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
   </ul>
 </nav>
 {% endif %}
