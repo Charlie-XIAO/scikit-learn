@@ -1,8 +1,8 @@
 .. _kernel_ridge:
 
-===========================
+=======================
 Kernel ridge regression
-===========================
+=======================
 
 .. currentmodule:: sklearn.kernel_ridge
 
