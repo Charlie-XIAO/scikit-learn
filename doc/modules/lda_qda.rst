@@ -30,8 +30,8 @@ flexible.
 
 .. topic:: Examples:
 
-    :ref:`sphx_glr_auto_examples_classification_plot_lda_qda.py`: Comparison of LDA and QDA
-    on synthetic data.
+  * :ref:`sphx_glr_auto_examples_classification_plot_lda_qda.py`: Comparison of LDA and
+    QDA on synthetic data.
 
 Dimensionality reduction using Linear Discriminant Analysis
 ===========================================================
@@ -50,8 +50,8 @@ on the `fit` and `predict` methods.
 
 .. topic:: Examples:
 
-    :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_lda.py`: Comparison of LDA and PCA
-    for dimensionality reduction of the Iris dataset
+  * :ref:`sphx_glr_auto_examples_decomposition_plot_pca_vs_lda.py`: Comparison of LDA
+    and PCA for dimensionality reduction of the Iris dataset
 
 .. _lda_qda_math:
 
@@ -212,8 +212,8 @@ class. A covariance estimator should have a :term:`fit` method and a
 
 .. topic:: Examples:
 
-    :ref:`sphx_glr_auto_examples_classification_plot_lda.py`: Comparison of LDA classifiers
-    with Empirical, Ledoit Wolf and OAS covariance estimator.
+  * :ref:`sphx_glr_auto_examples_classification_plot_lda.py`: Comparison of LDA
+    classifiers with Empirical, Ledoit Wolf and OAS covariance estimator.
 
 Estimation algorithms
 =====================
