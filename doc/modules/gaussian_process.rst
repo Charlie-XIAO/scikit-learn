@@ -19,8 +19,9 @@ The advantages of Gaussian processes are:
   refit (online fitting, adaptive fitting) the prediction in some
   region of interest.
 
-- Versatile: different :ref:`kernels<gp_kernels>` can be specified. Common
-  kernels are provided, but it is also possible to specify custom kernels.
+- Versatile: different :ref:`kernels
+  <gp_kernels>` can be specified. Common kernels are provided, but
+  it is also possible to specify custom kernels.
 
 The disadvantages of Gaussian processes include:
 
