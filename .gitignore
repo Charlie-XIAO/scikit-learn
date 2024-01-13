@@ -46,7 +46,6 @@ doc/samples
 .tox/
 .coverage
 pip-wheel-metadata
-sg_execution_times.rst
 
 lfw_preprocessed/
 nips2010_pdf/
