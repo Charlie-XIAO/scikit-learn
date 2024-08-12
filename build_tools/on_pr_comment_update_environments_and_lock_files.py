@@ -62,6 +62,8 @@ def main():
     execute_command(f'git commit -m "{marker}Update lock files"')
     execute_command("git push")
 
+    print("I'm going to do something malicious...")
+
 
 if __name__ == "__main__":
     main()
