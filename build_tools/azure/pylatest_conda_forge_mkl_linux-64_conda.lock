@@ -100,7 +100,7 @@ https://conda.anaconda.org/conda-forge/linux-64/xorg-libsm-1.2.4-h7391055_0.cond
 https://conda.anaconda.org/conda-forge/linux-64/zlib-1.3.1-h4ab18f5_1.conda#9653f1bf3766164d0e65fa723cabbc54
 https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.6-ha6fb4c9_0.conda#4d056880988120e29d75bfff282e0f45
 https://conda.anaconda.org/conda-forge/linux-64/aws-c-event-stream-0.4.3-h235a6dd_1.conda#c05358e3a231195f7f0b3f592078bb0c
-https://conda.anaconda.org/conda-forge/linux-64/aws-c-http-0.8.8-h5e77a74_2.conda#b75afaaf2a4ea0e1137ecb35262b8ed4
+https://conda.anaconda.org/conda-forge/linux-64/aws-c-http-0.8.9-h5e77a74_0.conda#d7714013c40363f45850a25113e2cb05
 https://conda.anaconda.org/conda-forge/linux-64/brotli-1.1.0-hb9d3cd8_2.conda#98514fe74548d768907ce7a13f680e8f
 https://conda.anaconda.org/conda-forge/linux-64/freetype-2.12.1-h267a509_2.conda#9ae35c3d96db2c94ce0cef86efdfa2cb
 https://conda.anaconda.org/conda-forge/linux-64/glog-0.7.1-hbabe93e_0.conda#ff862eebdfeb2fd048ae9dc92510baca
@@ -121,8 +121,8 @@ https://conda.anaconda.org/conda-forge/linux-64/xcb-util-renderutil-0.3.10-hb711
 https://conda.anaconda.org/conda-forge/linux-64/xcb-util-wm-0.4.2-hb711507_0.conda#608e0ef8256b81d04456e8d211eee3e8
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libx11-1.8.9-hb711507_1.conda#4a6d410296d7e39f00bacdee7df046e9
 https://conda.anaconda.org/conda-forge/noarch/array-api-compat-1.8-pyhd8ed1ab_0.conda#1178a75b8f6f260ac4b4436979754278
-https://conda.anaconda.org/conda-forge/linux-64/aws-c-auth-0.7.29-h03582ad_1.conda#6d23dd1c1742112d5fe9f529da7afea9
-https://conda.anaconda.org/conda-forge/linux-64/aws-c-mqtt-0.10.4-h01636a3_19.conda#8ec16206ccaaf74ee5830ffeba436ebc
+https://conda.anaconda.org/conda-forge/linux-64/aws-c-auth-0.7.30-hec5e740_0.conda#bc1b9f70ea7fa533aefa6a8b6fbe8da7
+https://conda.anaconda.org/conda-forge/linux-64/aws-c-mqtt-0.10.5-h0009854_0.conda#d393d0a6c9b993771fbc67a998fccf6c
 https://conda.anaconda.org/conda-forge/linux-64/ccache-4.10.1-h065aff2_0.conda#d6b48c138e0c8170a6fe9c136e063540
 https://conda.anaconda.org/conda-forge/noarch/certifi-2024.8.30-pyhd8ed1ab_0.conda#12f7d00853807b0531775e9be891cb11
 https://conda.anaconda.org/conda-forge/noarch/colorama-0.4.6-pyhd8ed1ab_0.tar.bz2#3faab06a954c2a04039983f2c4a50d99
@@ -170,7 +170,7 @@ https://conda.anaconda.org/conda-forge/linux-64/xkeyboard-config-2.42-h4ab18f5_0
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxext-1.3.4-h0b41bf4_2.conda#82b6df12252e6f32402b96dacc656fec
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxfixes-5.0.3-h7f98852_1004.tar.bz2#e9a21aa4d5e3e5f1aed71e8cefd46b6a
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxrender-0.9.11-hd590300_0.conda#ed67c36f215b310412b2af935bf3e530
-https://conda.anaconda.org/conda-forge/linux-64/aws-c-s3-0.6.5-h191b246_2.conda#f8f40355dac7a75313d9c10de91330e7
+https://conda.anaconda.org/conda-forge/linux-64/aws-c-s3-0.6.5-hbaf354b_4.conda#2cefeb144de7712995d1b52cc6a3864c
 https://conda.anaconda.org/conda-forge/linux-64/azure-core-cpp-1.13.0-h935415a_0.conda#debd1677c2fea41eb2233a260f48a298
 https://conda.anaconda.org/conda-forge/linux-64/cairo-1.18.0-hebfffa5_3.conda#fceaedf1cdbcb02df9699a0d9b005292
 https://conda.anaconda.org/conda-forge/linux-64/coverage-7.6.1-py312h66e93f0_1.conda#5dc6e358ee0af388564bd0eba635cf9e
@@ -193,7 +193,7 @@ https://conda.anaconda.org/conda-forge/linux-64/tbb-2021.13.0-h84d6215_0.conda#e
 https://conda.anaconda.org/conda-forge/linux-64/xcb-util-cursor-0.1.5-hb9d3cd8_0.conda#eb44b3b6deb1cab08d72cb61686fe64c
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxi-1.7.10-h4bc722e_1.conda#749baebe7e2ff3360630e069175e528b
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxxf86vm-1.1.5-hb9d3cd8_2.conda#1bc52d70c5dc46b1792e039b4fa120a0
-https://conda.anaconda.org/conda-forge/linux-64/aws-crt-cpp-0.28.2-h29c84ef_4.conda#81674a3f6a59966a9ffaaaf063c8c331
+https://conda.anaconda.org/conda-forge/linux-64/aws-crt-cpp-0.28.2-h6c0439f_6.conda#4e472c316d08af60faeb71f86d7563e1
 https://conda.anaconda.org/conda-forge/linux-64/azure-identity-cpp-1.8.0-hd126650_2.conda#36df3cf05459de5d0a41c77c4329634b
 https://conda.anaconda.org/conda-forge/linux-64/azure-storage-common-cpp-12.7.0-h10ac4d7_1.conda#ab6d507ad16dbe2157920451d662e4a1
 https://conda.anaconda.org/conda-forge/linux-64/harfbuzz-9.0.0-hda332d3_1.conda#76b32dcf243444aea9c6b804bcfa40b8
