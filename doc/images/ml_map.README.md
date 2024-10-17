@@ -14,7 +14,6 @@ for exporting the chart are:
 - Appearance: Light
 
 Each node in the chart that contains an estimator should have a link, where the root
-directory is at `../../`. Note that after updating or re-exporting the SVG, the links
-may be prefixed with e.g. `https://app.diagrams.net/`. Remember to check and remove
-them, for instance by replacing all occurrences of `https://app.diagrams.net/../../`
-with `../../`.
+directory is at `./`. Note that after updating or re-exporting the SVG, the links may be
+prefixed with e.g. `https://app.diagrams.net/`. Remember to check and remove them, for
+instance by replacing all occurrences of `https://app.diagrams.net/./` with `./`.
