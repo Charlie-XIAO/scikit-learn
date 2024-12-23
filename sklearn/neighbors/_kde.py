@@ -220,8 +220,7 @@ class KernelDensity(BaseEstimator):
             sample_weight = _check_sample_weight(
                 sample_weight, X, dtype=np.float64, ensure_non_negative=True
             )
-            normalized_sample_weight = sample_weight / sample_weight.sum()
-            n_effective_samples = 1 / np.sum(normalized_sample_weight**2)
+            n_effective_samples = sample_weight.sum()
         else:
             n_effective_samples = X.shape[0]
 
@@ -245,7 +244,17 @@ class KernelDensity(BaseEstimator):
             self._cov = np.eye(X.shape[1])
             self._cho_cov = np.eye(X.shape[1])
         else:
-            self._cov = np.atleast_2d(np.cov(X.T, aweights=sample_weight))
+            # Since `sample_weight` can have floating point values, we need to
+            # pass them to `numpy.cov` as `aweights` instead of `fweights`:
+            # `fweights` only accepts integer values.
+            #
+            # However, we also want `KernelDensity` to handle sample weights in
+            # a similar way to other estimators in scikit-learn: fitting with
+            # integer valued `sample_weight` (even with a float-based dtype)
+            # should be equivalent to fitting with an equivalent repetitions
+            # instead. Therefore using `ddof=0` is important to ensure that
+            # this invariance property holds.
+            self._cov = np.atleast_2d(np.cov(X.T, aweights=sample_weight, ddof=0))
             self._cho_cov = cholesky(self._cov, lower=True)
 
         kwargs = self.metric_params
